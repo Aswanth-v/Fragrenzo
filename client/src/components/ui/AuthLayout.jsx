@@ -4,12 +4,12 @@ const AuthLayout = () => {
   return (
     <div className="flex w-full min-h-screen">
       <div className="hidden lg:flex items-center justify-center bg-black w-1/2 px-12">
-        <div className="max-w-md space-y-6 text-center text-primary-forground">
+        <div className="max-w-md space-y-6 text-center text-chart-4">
           <h1 className="text-4xl font-extrabold">Hello</h1>
         </div>
       </div>
       <div className="flex flex-1 items-center justify-center bg-background">
-        <Outlet />
+        <Outlet/>
       </div>
     </div>
   )
