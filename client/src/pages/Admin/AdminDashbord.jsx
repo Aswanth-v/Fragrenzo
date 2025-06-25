@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
 const AdminDashbord = () => {
-  return (
-    <div>AdminDashbord</div>
-  )
-}
+  console.log("✅ AdminDashbord component rendered");
+  return <div>Admin Dashbord</div>;
+};
 
-export default AdminDashbord
+export default AdminDashbord;
