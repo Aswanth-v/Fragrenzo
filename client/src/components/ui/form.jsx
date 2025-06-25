@@ -1,134 +1,91 @@
-"use client";
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { Controller, FormProvider, useFormContext } from "react-hook-form";
+import React from "react";
 
-import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
+const Form = ({ formdata,data,setData,onSubmit,buttonText }) => {
+  const InputComponent = (getformItem) => {
+    let element = null;
+    const value=data[getformItem.name] ||""
+    switch (getformItem.componentType) {
+      case "input":
+        element = (
+          <input
+            name={getformItem.name}
+            placeholder={getformItem.placeholder}
+            id={getformItem.name}
+            type={getformItem.type}
+           value={value}
+           onChange={event=>setData({
+            ...data,
+            [getformItem.name]:event.target.value
+           })}
+          />
+        );
+        break;
 
-const Form = FormProvider
+      case "select":
+        element = (
+          <select onValueChange={(value)=>setData({
+            ...data,
+            [getformItem.name]:value
+          })} value={value}>
+            <option value="">{getformItem.placeholder}</option>
+            {getformItem.options &&
+              getformItem.options.map((optionItem) => (
+                <option key={optionItem.id} value={optionItem.id}>
+                  {optionItem.value}
+                </option>
+              ))}
+          </select>
+        );
+        break;
+      case "textarea":
+        element = (
+          <Textarea
+            name={getformItem.name}
+            placeholder={getformItem.placeholder}
+            id={getformItem.id}
+            value={value}
+             onChange={event=>setData({
+            ...data,
+            [getformItem.name]:event.target.value
+           })}
+          ></Textarea>
+        );
+        break;
 
-const FormFieldContext = React.createContext({})
+      default:
+        element = (
+          <input
+            name={getformItem.name}
+            placeholder={getformItem.placeholder}
+            id={getformItem.name}
+            type={getformItem.type}
+             onChange={event=>setData({
+            ...data,
+            [getformItem.name]:event.target.value
+           })}
+          />
+        );
+        break;
+    }
 
-const FormField = (
-  {
-    ...props
-  }
-) => {
-  return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
-    </FormFieldContext.Provider>
-  );
-}
-
-const useFormField = () => {
-  const fieldContext = React.useContext(FormFieldContext)
-  const itemContext = React.useContext(FormItemContext)
-  const { getFieldState, formState } = useFormContext()
-
-  const fieldState = getFieldState(fieldContext.name, formState)
-
-  if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>")
-  }
-
-  const { id } = itemContext
-
-  return {
-    id,
-    name: fieldContext.name,
-    formItemId: `${id}-form-item`,
-    formDescriptionId: `${id}-form-item-description`,
-    formMessageId: `${id}-form-item-message`,
-    ...fieldState,
-  }
-}
-
-const FormItemContext = React.createContext({})
-
-const FormItem = React.forwardRef(({ className, ...props }, ref) => {
-  const id = React.useId()
-
-  return (
-    <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn("space-y-2", className)} {...props} />
-    </FormItemContext.Provider>
-  );
-})
-FormItem.displayName = "FormItem"
-
-const FormLabel = React.forwardRef(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
-
-  return (
-    <Label
-      ref={ref}
-      className={cn(error && "text-destructive", className)}
-      htmlFor={formItemId}
-      {...props} />
-  );
-})
-FormLabel.displayName = "FormLabel"
-
-const FormControl = React.forwardRef(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+    return element;
+  };
 
   return (
-    <Slot
-      ref={ref}
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props} />
+    <form onSubmit={onSubmit}>
+      <div className="flex flex-col gap-4">
+        {formdata.map((formItem) => (
+          <div className="grid w-full gap-1.5" key={formItem.name}>
+            {/* Render the actual form fields, e.g.: */}
+            <label className="mb-1">{formItem.label}</label>
+            {InputComponent(formItem)}
+          </div>
+        ))}
+      </div>
+      <button type="submit" className="w-full mt-2">Submit</button>
+    </form>
+
   );
-})
-FormControl.displayName = "FormControl"
+};
 
-const FormDescription = React.forwardRef(({ className, ...props }, ref) => {
-  const { formDescriptionId } = useFormField()
-
-  return (
-    <p
-      ref={ref}
-      id={formDescriptionId}
-      className={cn("text-[0.8rem] text-muted-foreground", className)}
-      {...props} />
-  );
-})
-FormDescription.displayName = "FormDescription"
-
-const FormMessage = React.forwardRef(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message ?? "") : children
-
-  if (!body) {
-    return null
-  }
-
-  return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cn("text-[0.8rem] font-medium text-destructive", className)}
-      {...props}>
-      {body}
-    </p>
-  );
-})
-FormMessage.displayName = "FormMessage"
-
-export {
-  useFormField,
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  FormField,
-}
+export default Form;

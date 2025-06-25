@@ -21,11 +21,8 @@ import ChekoutPage from "./pages/shopping/ChekoutPage.jsx";
 import Home from "./pages/shopping/Home.jsx";
 
 const App = () => {
-  const isAuthenticated=true
-  const user={
-    name:'aswa',
-    role:'admin'
-  }
+  const isAuthenticated=false
+  const user=null
   return (
     <div className="flex flex-col overflow">
       <Routes>
