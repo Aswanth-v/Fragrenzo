@@ -64,12 +64,13 @@ Base Theme (Light + Dark Mode)
   }
 }
 /* index.css or global stylesheet */
-.black-neon {
+.white-neon {
   text-shadow:
-    0 0 5px rgba(0, 0, 0, 0.8),
-    0 0 10px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(0, 0, 0, 0.4);
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(255, 255, 255, 0.4);
 }
+
 
 
 @layer base {

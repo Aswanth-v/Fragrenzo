@@ -9,12 +9,12 @@ const AuthLayout = () => {
       <img
         src={perfume}
         alt="Fragrenzo Perfume"
-        className="absolute inset-0 w-full h-full object-cover opacity-35"
+        className="absolute inset-0 w-full h-full object-cover"
       />
 
       {/* Left Section (visible only from MD screens and above) */}
       <div className="relative hidden md:flex flex-col items-center justify-center w-1/2 p-12">
-        <h1 className="text-6xl font-extrabold text-black z-10 black-neon tracking-wider">Fragrenzo</h1>
+        <h1 className="text-6xl font-extrabold text-white z-10 white-neon tracking-wider">Fragrenzo</h1>
       </div>
 
       {/* Right Section (always visible) */}
