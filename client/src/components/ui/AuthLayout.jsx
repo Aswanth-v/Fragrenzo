@@ -1,18 +1,28 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import perfume from "../../assets/perfume.png";
+
 const AuthLayout = () => {
   return (
-    <div className="flex w-full min-h-screen">
-      <div className="hidden lg:flex items-center justify-center bg-black w-1/2 px-12">
-        <div className="max-w-md space-y-6 text-center text-chart-4">
-          <h1 className="text-4xl font-extrabold">Hello</h1>
-        </div>
+    <div className="relative flex w-full min-h-screen">
+      {/* Faded Background Image across the screen */}
+      <img
+        src={perfume}
+        alt="Fragrenzo Perfume"
+        className="absolute inset-0 w-full h-full object-cover opacity-35"
+      />
+
+      {/* Left Section (visible only from MD screens and above) */}
+      <div className="relative hidden md:flex flex-col items-center justify-center w-1/2 p-12">
+        <h1 className="text-6xl font-extrabold text-black z-10 black-neon tracking-wider">Fragrenzo</h1>
       </div>
-      <div className="flex flex-1 items-center justify-center bg-background">
-        <Outlet/>
+
+      {/* Right Section (always visible) */}
+      <div className="relative flex flex-1 items-center justify-center">
+        <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;

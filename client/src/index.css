@@ -63,6 +63,14 @@ Base Theme (Light + Dark Mode)
     --chart-5: 340 75% 55%; /* hsl(340, 75%, 55%) */
   }
 }
+/* index.css or global stylesheet */
+.black-neon {
+  text-shadow:
+    0 0 5px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 0, 0, 0.4);
+}
+
 
 @layer base {
   * {
