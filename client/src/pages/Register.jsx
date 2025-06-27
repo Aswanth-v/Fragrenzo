@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "../components/ui/Form";
 import { RegisterformControlls } from "../config/RegisterformControlls";
-
+import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { userRegisterAction } from "../redux/Authslice.js";
 const initialState = {
   name: "",
   email: "",
@@ -12,11 +14,18 @@ const initialState = {
 
 const Register = () => {
   const [data, setData] = useState(initialState);
-
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(data);
-    alert(`Registering with data:\n${JSON.stringify(data, null, 2)}`);
+   dispatch(userRegisterAction(data)).then((res) => {
+  if (res.meta.requestStatus === "fulfilled") {
+    navigate("/auth/login"); // ✅ Redirect to login
+  } else {
+    console.log("Registration failed", res.payload);
+  }
+});
+
   };
   
  return (

@@ -14,7 +14,8 @@ export const userRegister=async(req,res)=>{
             password:hashPassword
         })
 
-        await User.save()
+        await newUser.save() 
+
         res.status(200).json({
                success:true,
             message:"registration success"
