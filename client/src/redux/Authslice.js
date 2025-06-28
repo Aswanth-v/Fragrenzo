@@ -22,6 +22,20 @@ export const userRegisterAction=createAsyncThunk('/auth/register',
 
 
 
+export const userLoginAction=createAsyncThunk('/auth/login',
+
+  async(data)=>{
+    const response =await axios.post('http://localhost:5000/api/auth/login',
+      data,
+      {
+        withCredentials:true,
+      }
+    )
+    return response.data
+  }
+)
+
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -48,9 +62,27 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+
+
+       .addCase(userLoginAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userLoginAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = !action.payload.success? null :  action.payload.user;
+        state.isAuthenticated =!action.payload.success? false : true; // ✅ Set to true if you want to consider them logged in after registration
+      })
+      .addCase(userLoginAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
       });
   },
 });
+
+
+
 
 
 export const { setAuthenticated, setLoading } = authSlice.actions;

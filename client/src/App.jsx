@@ -19,10 +19,11 @@ import AccountPage from "./pages/shopping/AccountPage.jsx";
 import Listing from "./pages/shopping/Listing.jsx";
 import ChekoutPage from "./pages/shopping/ChekoutPage.jsx";
 import Home from "./pages/shopping/Home.jsx";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const isAuthenticated=false
-  const user=null
+
+  const {isAuthenticated,user}=useSelector(state=>state.auth)
   return (
     <div className="flex flex-col overflow">
       <Routes>

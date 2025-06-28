@@ -3,7 +3,9 @@ import "../index.css";
 import { Link } from "react-router-dom";
 import Form from "../components/ui/Form";
 import { LoginformControlls } from "../config/RegisterformControlls";
-
+import { useDispatch } from "react-redux";
+import { userLoginAction } from "../redux/Authslice";
+import { useToast } from "../hooks/use-toast"
 const initialState = {
 
   email: "",
@@ -12,11 +14,18 @@ const initialState = {
 
 const Login = () => {
   const [data, setData] = useState(initialState);
-
+  const dispatch=useDispatch()
+  const { toast } = useToast()
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(data);
-    alert(`Registering with data:\n${JSON.stringify(data, null, 2)}`);
+   dispatch(userLoginAction(data)).then((data)=>{
+    if (data?.payload?.success) {
+  toast({ title: data?.payload?.message })
+    }else{
+       toast({ title: data?.payload?.message, variant: "destructive", })
+    }
+   })
   };
   
  return (
