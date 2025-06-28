@@ -6,6 +6,10 @@ import { RegisterformControlls } from "../config/RegisterformControlls";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { userRegisterAction } from "../redux/Authslice.js";
+import { useToast } from "../hooks/use-toast"
+import { ToastAction } from "../components/ui/toast"
+
+
 const initialState = {
   name: "",
   email: "",
@@ -16,14 +20,21 @@ const Register = () => {
   const [data, setData] = useState(initialState);
   const dispatch=useDispatch()
   const navigate=useNavigate()
+    const { toast } = useToast()
   const onSubmit = (event) => {
     event.preventDefault();
-   dispatch(userRegisterAction(data)).then((res) => {
-  if (res.meta.requestStatus === "fulfilled") {
-    navigate("/auth/login"); // ✅ Redirect to login
-  } else {
-    console.log("Registration failed", res.payload);
-  }
+   dispatch(userRegisterAction(data)).then((data) => {
+  if (data?.payload?.success) {
+  toast({ title: data?.payload?.message });
+  navigate('/auth/login');
+} else {
+  console.log("Toast failure fired"); // Debug
+  toast({
+    title: data?.payload?.message || "Something went wrong",
+    variant: "destructive",
+      action: <ToastAction altText="Try again">Try again</ToastAction>
+  });
+}
 });
 
   };
