@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Authcheck from "./components/Authcheck.jsx";
 // Layouts
@@ -19,11 +19,17 @@ import AccountPage from "./pages/shopping/AccountPage.jsx";
 import Listing from "./pages/shopping/Listing.jsx";
 import ChekoutPage from "./pages/shopping/ChekoutPage.jsx";
 import Home from "./pages/shopping/Home.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authCheck } from "./redux/Authslice.js";
 
 const App = () => {
 
-  const {isAuthenticated,user}=useSelector(state=>state.auth)
+  const {isAuthenticated,user,isLoading}=useSelector(state=>state.auth)
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    dispatch(authCheck())
+  },[dispatch])
+  if(isLoading) return <div>Loading...</div>
   return (
     <div className="flex flex-col overflow">
       <Routes>

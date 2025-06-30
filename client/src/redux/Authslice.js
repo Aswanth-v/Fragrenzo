@@ -35,7 +35,22 @@ export const userLoginAction=createAsyncThunk('/auth/login',
   }
 )
 
+export const authCheck=createAsyncThunk('/auth/auth-check',
 
+  async()=>{
+    const response =await axios.get('http://localhost:5000/api/auth/auth-check',
+      
+      {
+        withCredentials:true,
+       headers: {
+  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+}
+
+      }
+    )
+    return response.data
+  }
+)
 
 const authSlice = createSlice({
   name: "auth",
@@ -74,6 +89,21 @@ const authSlice = createSlice({
         state.isAuthenticated =!action.payload.success? false : true; // ✅ Set to true if you want to consider them logged in after registration
       })
       .addCase(userLoginAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+
+
+      .addCase(authCheck.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authCheck.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = !action.payload.success? null :  action.payload.user;
+        state.isAuthenticated =!action.payload.success? false : true; // ✅ Set to true if you want to consider them logged in after registration
+      })
+      .addCase(authCheck.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;

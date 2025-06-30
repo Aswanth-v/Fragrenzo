@@ -82,7 +82,30 @@ export const userLogin=async(req,res)=>{
 
 
 //logout
-
+export const userlogout=(req,res)=>{
+    res.clearCookie('token').json({
+        success:true,
+        message:"Logout Success"
+    })
+}
 
 
 //auth middleware
+export const authMiddleware=async(req,res,next)=>{
+    const token=req.cookies.token
+    if(!token) return res.status(401).json({
+        success:false,
+        message:"user is not authorie"
+    })
+
+    try{
+        const tokenDecode=jwt.verify(token,'CLIENT_KEY')
+        req.user=tokenDecode
+        next()
+    }catch(error){
+      res.status(401).json({
+        success:false,
+        message:"user is not authorie"
+    })  
+    }
+}
