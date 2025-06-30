@@ -1,51 +1,36 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-const Authcheck = ({ isAuthenticated, user, children }) => {
+const Authcheck = ({ isAuthenticated, user, isLoading, children }) => {
   const location = useLocation();
 
-  // Paths
-  const isLoginPage = location.pathname.includes("/login");
-  const isRegisterPage = location.pathname.includes("/register");
+  if (isLoading) return <div>Loading...</div>;
 
-  // ⚡️ IF NOT AUTHENTICATED:
-  if (!isAuthenticated) {
-    // Allow access to /auth/login and /auth/register
-    if (isLoginPage || isRegisterPage) {
-      return <>{children}</>;
-    }
-    // Redirect EVERYTHING ELSE
-    return <Navigate to="/auth/login" />;
+  const isAuthPage =
+    location.pathname.includes("/login") || location.pathname.includes("/register");
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isShopRoute = location.pathname.startsWith("/shop");
+
+  if (!isAuthenticated && !isAuthPage) {
+    return <Navigate to="/auth/login" replace />;
   }
 
-  // ⚡️ IF AUTHENTICATED:
-  if (isAuthenticated && (isLoginPage || isRegisterPage)) {
-    // Redirect already logged-in user trying to access login/register
-    if (user?.role === "admin") {
-      return <Navigate to="/admin/dashbord" />;
-    }
-    return <Navigate to="/shop/home" />;
+  if (isAuthenticated && isAuthPage) {
+    return user?.role === "admin" ? (
+      <Navigate to="/admin/dashbord" replace />
+    ) : (
+      <Navigate to="/shop/home" replace />
+    );
   }
 
-  // ⚡️ IF ADMIN trying to access SHOP pages
-  if (
-    isAuthenticated &&
-    user?.role === "admin" &&
-    location.pathname.includes("/shop")
-  ) {
-    return <Navigate to="/admin/dashbord" />;
+  if (isAuthenticated && user?.role !== "admin" && isAdminRoute) {
+    return <Navigate to="/unauth-page" replace />;
   }
 
-  // ⚡️ IF USER trying to access ADMIN pages
-  if (
-    isAuthenticated &&
-    user?.role !== "admin" &&
-    location.pathname.includes("/admin")
-  ) {
-    return <Navigate to="/shop/home" />;
+  if (isAuthenticated && user?.role === "admin" && isShopRoute) {
+    return <Navigate to="/admin/dashbord" replace />;
   }
 
-  // ✅ Otherwise, Render the page
   return <>{children}</>;
 };
 

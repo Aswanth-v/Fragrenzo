@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true,
    user: null
 };
 
@@ -35,7 +35,7 @@ export const userLoginAction=createAsyncThunk('/auth/login',
   }
 )
 
-export const authCheck=createAsyncThunk('/auth/auth-check',
+export const authCheck=createAsyncThunk('/auth/authcheck',
 
   async()=>{
     const response =await axios.get('http://localhost:5000/api/auth/auth-check',
@@ -83,11 +83,11 @@ const authSlice = createSlice({
        .addCase(userLoginAction.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(userLoginAction.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = !action.payload.success? null :  action.payload.user;
-        state.isAuthenticated =!action.payload.success? false : true; // ✅ Set to true if you want to consider them logged in after registration
-      })
+    .addCase(userLoginAction.fulfilled, (state, action) => {
+  state.isLoading = false;
+  state.user = action.payload.success ? action.payload.user : null;
+  state.isAuthenticated = action.payload.success;
+})
       .addCase(userLoginAction.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
@@ -98,11 +98,14 @@ const authSlice = createSlice({
       .addCase(authCheck.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(authCheck.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = !action.payload.success? null :  action.payload.user;
-        state.isAuthenticated =!action.payload.success? false : true; // ✅ Set to true if you want to consider them logged in after registration
-      })
+.addCase(authCheck.fulfilled, (state, action) => {
+  console.log("AuthCheck Success:", action.payload); // 👈 Debug this
+  state.isLoading = false;
+  state.user = action.payload.success ? action.payload.user : null;
+  state.isAuthenticated = action.payload.success;
+})
+
+
       .addCase(authCheck.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
