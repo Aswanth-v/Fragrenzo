@@ -91,21 +91,23 @@ export const userlogout=(req,res)=>{
 
 
 //auth middleware
-export const authMiddleware=async(req,res,next)=>{
-    const token=req.cookies.token
-    if(!token) return res.status(401).json({
-        success:false,
-        message:"Unauthorized user!"
-    })
+export const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized user!",
+    });
 
-    try{
-        const tokenDecode=jwt.verify(token,'CLIENT_KEY')
-        req.user=tokenDecode
-        next()
-    }catch(error){
-      res.status(401).json({
-        success:false,
-        message:" Unauthorized user!"
-    })  
-    }
-}
+  try {
+    const tokenDecode = jwt.verify(token, 'CLIENT_KEY'); // 👈 make sure this matches the one used in login
+    req.user = tokenDecode;
+    next();
+  } catch (error) {
+    console.log("JWT Verify Error:", error); // 👈 ADD THIS
+    res.status(401).json({
+      success: false,
+      message: " Unauthorized user!",
+    });
+  }
+};
