@@ -34,18 +34,22 @@ const AdminSidebarMenu = [
   },
 ]
 
-const MenuItems = () => {
+const MenuItems = ({setOpen}) => {
   const navigate = useNavigate()
   return (
     <nav className="mt-8 flex flex-col gap-4">
       {AdminSidebarMenu.map((item) => (
         <div
           key={item.id}
-          onClick={() => navigate(item.path)}
+          onClick={() => {navigate(item.path)
+             setOpen ? setOpen(false):null
+          }
+        }
           className="flex items-center gap-2 rounded-md px-3 py-4 text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer"
         >
           {item.icon}
           <span>{item.label}</span>
+        
         </div>
       ))}
     </nav>
@@ -66,7 +70,7 @@ const AdminSidebar = ({ open, setOpen }) => {
                 <span className="text-xl font-bold">Admin Panel</span>
               </SheetTitle>
             </SheetHeader>
-            <MenuItems /> 
+            <MenuItems setOpen={setOpen} /> 
           </div>
         </SheetContent>
       </Sheet>
