@@ -1,25 +1,23 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import AdminHeader from '../AdminHeader';
-import AdminSidebar from '../AdminSidebar';
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import AdminSidebar from "../AdminSidebar";
+import AdminHeader from "../AdminHeader";
 
 const AdminLayout = () => {
+  const [openSidebar, setOpenSidebar] = useState(false);
+
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex min-h-screen w-full">
       {/* ✅ Sidebar Section */}
-      <div className="w-64 flex-shrink-0 bg-gray-800 text-white">
-        <AdminSidebar />
-      </div>
+      <AdminSidebar open={openSidebar} setOpen={setOpenSidebar} />
 
-      {/* ✅ Main Section */}
-      <div className="flex flex-col flex-1">
+      {/* ✅ Main Content Section */}
+      <div className="flex flex-1 flex-col">
         {/* ✅ Header Section */}
-        <div className="h-16 flex items-center justify-between px-4 border-b bg-white">
-          <AdminHeader />
-        </div>
+        <AdminHeader setOpen={setOpenSidebar} />
 
-        {/* ✅ Main Content Area */}
-        <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
+        {/* ✅ Main Area */}
+        <main className="flex-1 flex-col flex bg-muted/40 p-4 md:p-6">
           <Outlet />
         </main>
       </div>
