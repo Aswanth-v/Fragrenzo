@@ -45,7 +45,7 @@ const MenuItems = ({setOpen}) => {
              setOpen ? setOpen(false):null
           }
         }
-          className="flex items-center gap-2 rounded-md px-3 py-4 text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer"
+          className="flex items-center gap-2 rounded-md px-3 py-4 text-foreground hover:bg-destructive-foreground cursor-pointer"
         >
           {item.icon}
           <span>{item.label}</span>
