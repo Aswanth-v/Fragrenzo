@@ -100,12 +100,5 @@ export const addFragrensFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter available stock",
-  },
-  {
-    label: "Image URL",
-    name: "imageUrl",
-    componentType: "input",
-    type: "text",
-    placeholder: "Enter image URL",
-  },
+  }
 ];

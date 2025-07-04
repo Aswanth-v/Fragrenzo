@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import { Sheet, SheetContent, SheetHeader } from "../../components/ui/sheet";
 import Form from "../../components/ui/Form";
 import { addFragrensFormElements } from "../../config/RegisterformControlls";
+import Addimage from "../../components/Addimage.jsx";
 
 const initialFormData = {
   image: null,
@@ -18,6 +19,8 @@ const initialFormData = {
 const AdminProducts = () => {
   const [productDialoge, setProdutDialoge] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
+  const [imageFile,setImageFile]=useState(null)
+  const [imageurl,setImageUrl]=useState('')
 
   const onSubmit = () => {};
   return (
@@ -33,6 +36,7 @@ const AdminProducts = () => {
         >
           <SheetContent side="right" className="overflow-auto">
             <SheetHeader>Add-Products</SheetHeader>
+            <Addimage imageFile={imageFile} setImageFile={setImageFile} imageurl={imageurl} setImageUrl={setImageUrl}/>
             <div className="py-6">
          <Form
               onSubmit={onSubmit}
