@@ -1,13 +1,14 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { Input } from "../components/ui/input"; // if navigating up a level
-
+import axios from "axios";
+ 
 import { Label } from "../components/ui/label";
 import { UploadCloudIcon } from "lucide-react";
 import { FileIcon } from "lucide-react";
 import { XIcon } from "lucide-react";
 import { Button } from "./ui/button";
 
-const Addimage = ({ imageFile, setImageFile, imageurl, setImageUrl }) => {
+const Addimage = ({ imageFile, setImageFile, imageurl, setImageUrl, setUploadedImageUrl, setImageLoadingState, }) => {
   const inputRef = useRef(null);
 
   const imageFileChange = (event) => {
@@ -34,6 +35,26 @@ const Addimage = ({ imageFile, setImageFile, imageurl, setImageUrl }) => {
       inputRef.current.value = "";
     }
   }
+async function uploadImageToCloudinary() {
+    setImageLoadingState(true);
+    const data = new FormData();
+    data.append("my_file", imageFile);
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/products/upload-image",
+      data
+    );
+    console.log(response, "response");
+
+    if (response?.data?.success) {
+      setUploadedImageUrl(response.data.result.url);
+      setImageLoadingState(false);
+    }
+  }
+
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
+
   return (
     <div className="w-full max-w-md mx-auto  mt-4">
       <Label className="tetx-lg font-semibold mb-2 block">image upload</Label>

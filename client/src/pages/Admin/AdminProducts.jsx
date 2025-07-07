@@ -21,6 +21,7 @@ const AdminProducts = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile,setImageFile]=useState(null)
   const [imageurl,setImageUrl]=useState('')
+  const [imageLoadingState, setImageLoadingState] = useState(false);
 
   const onSubmit = () => {};
   return (
@@ -36,7 +37,15 @@ const AdminProducts = () => {
         >
           <SheetContent side="right" className="overflow-auto">
             <SheetHeader>Add-Products</SheetHeader>
-            <Addimage imageFile={imageFile} setImageFile={setImageFile} imageurl={imageurl} setImageUrl={setImageUrl}/>
+<Addimage
+  imageFile={imageFile}
+  setImageFile={setImageFile}
+  imageurl={imageurl}
+  setImageUrl={setImageUrl}
+  imageLoadingState={imageLoadingState}
+ setImageLoadingState={setImageLoadingState}
+/>
+
             <div className="py-6">
          <Form
               onSubmit={onSubmit}
