@@ -1,4 +1,6 @@
 import { imageUploadUtil } from "../../helpers/cloudinary.js";
+import Product from '../../model/product.js'
+
 
 export const handleImageUpload = async (req, res) => {
   try {
@@ -28,3 +30,83 @@ export const handleImageUpload = async (req, res) => {
     });
   }
 };
+
+
+
+//add new Product
+
+export const addProduct=async(req,res)=>{
+try{
+
+const {image,title,description,category,brand,Price,salePrice,totalStock,volium}=req.body
+const newestProduct= new Product({
+  image,title,description,category,brand,Price,salePrice,totalStock,volium
+})
+
+await newestProduct.save()
+res.status(200).json({
+  success:true,
+  data:newestProduct
+})
+
+
+}catch(error){
+  console.log(error);
+  res.status(500).json({
+    success:false,
+    message:"error came up"
+
+  })
+  
+}
+}
+
+
+//fetchProduct
+
+export const fetchProduct=async(req,res)=>{
+try{
+  
+}catch(error){
+  console.log(error);
+  res.status(500).json({
+    success:false,
+    message:"error came up"
+
+  })
+  
+}
+}
+
+
+//editProduct
+
+export const editProduct=async(req,res)=>{
+try{
+
+}catch(error){
+  console.log(error);
+  res.status(500).json({
+    success:false,
+    message:"error came up"
+
+  })
+  
+}
+}
+
+//deleteProduct
+
+export const deleteProduct=async(req,res)=>{
+try{
+
+}catch(error){
+  console.log(error);
+  res.status(500).json({
+    success:false,
+    message:"error came up"
+
+  })
+  
+}
+}

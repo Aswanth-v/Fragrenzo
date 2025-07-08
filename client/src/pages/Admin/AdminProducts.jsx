@@ -13,7 +13,6 @@ const initialFormData = {
   brand: "",
   price: "",
   salePrice: "",
-  totalStock: "",
   averageReview: 0,
 };
 const AdminProducts = () => {
@@ -24,6 +23,8 @@ const AdminProducts = () => {
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
   const onSubmit = () => {};
+  console.log(formData);
+  
   return (
     <Fragment>
       <div className="mb-b w-full flex justify-end">
