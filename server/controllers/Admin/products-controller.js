@@ -87,7 +87,29 @@ try{
 
 export const editProduct=async(req,res)=>{
 try{
+  const {id}=req.params
+  const {image,title,description,category,brand,Price,salePrice,totalStock,volium}=req.body
 
+  const findProduct= await Product.findById(id)
+  if(!findProduct) return res.status(404).json({
+    success:false,
+    message:"Product Not Found"
+  })
+
+  findProduct.title=title || findProduct.title
+  findProduct.description=description || findProduct.description
+  findProduct.category=category || findProduct.category
+  findProduct.brand=brand || findProduct.brand
+  findProduct.Price=Price || findProduct.Price
+  findProduct.salePrice=salePrice || findProduct.salePrice
+  findProduct.totalStock=totalStock || findProduct.totalStock
+  findProduct.volium=volium || findProduct.volium
+
+  await findProduct.save()
+  res.status(200).json({
+    success:true,
+    data:findProduct
+  })
 }catch(error){
   console.log(error);
   res.status(500).json({
@@ -103,7 +125,19 @@ try{
 
 export const deleteProduct=async(req,res)=>{
 try{
+const {id} =req.params
+const product=await product.findByidAndUpdate(id)
 
+
+if(!product) return res.status(404).json({
+  success:false,
+  message:'product not found'
+})
+
+res.status(202).json({
+  success:true,
+  message:"product deleted"
+})
 }catch(error){
   console.log(error);
   res.status(500).json({
