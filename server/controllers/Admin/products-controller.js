@@ -66,7 +66,11 @@ res.status(200).json({
 
 export const fetchProduct=async(req,res)=>{
 try{
-  
+  const listOfProduct=await Product.find({})
+  res.status(200).json({
+    success:true,
+    data:listOfProduct
+  })
 }catch(error){
   console.log(error);
   res.status(500).json({
