@@ -1,5 +1,6 @@
 import { imageUploadUtil } from "../../helpers/cloudinary.js";
-import Product from '../../model/product.js'
+import Product from '../../model/Product.js';
+
 
 
 export const handleImageUpload = async (req, res) => {
@@ -126,7 +127,7 @@ try{
 export const deleteProduct=async(req,res)=>{
 try{
 const {id} =req.params
-const product=await product.findByidAndUpdate(id)
+  const product = await Product.findByIdAndDelete(id);
 
 
 if(!product) return res.status(404).json({
