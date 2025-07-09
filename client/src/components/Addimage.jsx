@@ -1,53 +1,65 @@
-import React, { Fragment, useEffect, useRef } from "react";
-import { Input } from "../components/ui/input"; // if navigating up a level
+import React, { useEffect, useRef } from "react";
+import { Input } from "../components/ui/input";
 import axios from "axios";
- 
-import { Label } from "../components/ui/label";
-import { UploadCloudIcon } from "lucide-react";
-import { FileIcon } from "lucide-react";
-import { XIcon } from "lucide-react";
-import { Button } from "./ui/button";
 
-const Addimage = ({ imageFile, setImageFile, imageurl, setImageUrl, setUploadedImageUrl, setImageLoadingState, }) => {
+import { Label } from "../components/ui/label";
+import { UploadCloudIcon, FileIcon, XIcon } from "lucide-react";
+import { Button } from "./ui/button";
+import Aurora from "../components/Aurora";
+
+const Addimage = ({
+  imageFile,
+  setImageFile,
+  imageurl,
+  setImageUrl,
+  setUploadedImageUrl,
+  setImageLoadingState,
+  imageLoadingState,
+}) => {
   const inputRef = useRef(null);
 
   const imageFileChange = (event) => {
-    console.log(event.target.files);
     const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
-
     if (selectedFile) setImageFile(selectedFile);
-
   };
-    const hadleDragover=(event)=> {
-    event.preventDefault();
-  }
 
-  const hadleDrop=(event)=> {
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files?.[0];
     if (droppedFile) setImageFile(droppedFile);
-  }
+  };
 
-    const handleRemoveImage=()=> {
+  const handleRemoveImage = () => {
     setImageFile(null);
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-  }
-async function uploadImageToCloudinary() {
-    setImageLoadingState(true);
-    const data = new FormData();
-    data.append("my_file", imageFile);
-    const response = await axios.post(
-      "http://localhost:5000/api/admin/products/upload-image",
-      data
-    );
-    console.log(response, "response");
+  };
 
-    if (response?.data?.success) {
-      setUploadedImageUrl(response.data.result.url);
-      setImageLoadingState(false);
+  async function uploadImageToCloudinary() {
+    try {
+      setImageLoadingState(true);
+      const data = new FormData();
+      data.append("my_file", imageFile);
+
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/products/upload-image",
+        data
+      );
+
+      console.log(response, "response");
+
+      if (response?.data?.success) {
+        setUploadedImageUrl(response.data.result.url);
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setImageLoadingState(false); // ✅ Always reset
     }
   }
 
@@ -56,9 +68,13 @@ async function uploadImageToCloudinary() {
   }, [imageFile]);
 
   return (
-    <div className="w-full max-w-md mx-auto  mt-4">
-      <Label className="tetx-lg font-semibold mb-2 block">image upload</Label>
-      <div onDragOver={hadleDragover} onDrop={hadleDrop} className="border-2 border-dotted rounded-lg p-4 mt-4">
+    <div className="w-full max-w-md mx-auto mt-4">
+      <Label className="text-lg font-semibold mb-2 block">Image Upload</Label>
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className="border-2 border-dotted rounded-lg p-4 mt-4"
+      >
         <Input
           id="image-upload"
           type="file"
@@ -66,6 +82,7 @@ async function uploadImageToCloudinary() {
           ref={inputRef}
           onChange={imageFileChange}
         />
+
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
@@ -74,8 +91,18 @@ async function uploadImageToCloudinary() {
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & Drop or Add by Click</span>
           </Label>
+        ) : imageLoadingState ? (
+          <div className="flex items-center justify-center h-32">
+            <Aurora
+        colorStops={["#D8EAD8", "#C8E6C9", "#E8F5E9"]}
+
+              blend={3.0}
+              amplitude={2.0}
+              speed={0.8}
+            />
+          </div>
         ) : (
-           <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               <FileIcon className="w-8 text-primary mr-2 h-8" />
             </div>

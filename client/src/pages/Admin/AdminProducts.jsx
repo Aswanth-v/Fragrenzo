@@ -45,6 +45,7 @@ const AdminProducts = () => {
   setImageUrl={setImageUrl}
   imageLoadingState={imageLoadingState}
  setImageLoadingState={setImageLoadingState}
+ imageLoadingStat={imageLoadingState}
 />
 
             <div className="py-6">
