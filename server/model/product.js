@@ -6,11 +6,10 @@ const ProductSchema = new mongoose.Schema({
   description: String,
   category: String,
   brand: String,
-  Price: Number,
+  price: Number,         // ✅ lowercase "price"
   salePrice: Number,
-  totalStock: Number,
-    volium: String
-
+  stock: Number,         // ✅ changed from totalStock to stock
+  volume: String         // ✅ typo fixed from volium to volume
 }, { timestamps: true });
 
 const Product = mongoose.model('Product', ProductSchema);

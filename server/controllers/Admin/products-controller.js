@@ -1,5 +1,6 @@
 import { imageUploadUtil } from "../../helpers/cloudinary.js";
-import Product from '../../model/Product.js';
+import Product from '../../model/product.js'
+
 
 
 
@@ -39,9 +40,25 @@ export const handleImageUpload = async (req, res) => {
 export const addProduct=async(req,res)=>{
 try{
 
-const {image,title,description,category,brand,Price,salePrice,totalStock,volium}=req.body
+const { image,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      stock,
+      volume}=req.body
 const newestProduct= new Product({
-  image,title,description,category,brand,Price,salePrice,totalStock,volium
+  image,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      stock,
+      volume
 })
 
 await newestProduct.save()
@@ -89,7 +106,15 @@ try{
 export const editProduct=async(req,res)=>{
 try{
   const {id}=req.params
-  const {image,title,description,category,brand,Price,salePrice,totalStock,volium}=req.body
+  const { image,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      stock,
+      volume}=req.body
 
   const findProduct= await Product.findById(id)
   if(!findProduct) return res.status(404).json({
@@ -97,14 +122,15 @@ try{
     message:"Product Not Found"
   })
 
-  findProduct.title=title || findProduct.title
-  findProduct.description=description || findProduct.description
-  findProduct.category=category || findProduct.category
-  findProduct.brand=brand || findProduct.brand
-  findProduct.Price=Price || findProduct.Price
-  findProduct.salePrice=salePrice || findProduct.salePrice
-  findProduct.totalStock=totalStock || findProduct.totalStock
-  findProduct.volium=volium || findProduct.volium
+findProduct.title = title ?? findProduct.title;
+findProduct.description = description ?? findProduct.description;
+findProduct.category = category ?? findProduct.category;
+findProduct.brand = brand ?? findProduct.brand;
+findProduct.price = price ?? findProduct.price;
+findProduct.salePrice = salePrice ?? findProduct.salePrice;
+findProduct.stock = stock ?? findProduct.stock;
+findProduct.volume = volume ?? findProduct.volume;
+
 
   await findProduct.save()
   res.status(200).json({

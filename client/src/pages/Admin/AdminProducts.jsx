@@ -10,13 +10,15 @@ import { useToast } from "../../hooks/use-toast"
 import ProductCard from "../../components/Product-Card";
 
 const initialFormData = {
-  image: null,
+   image: null,
   title: "",
   description: "",
   category: "",
   brand: "",
-  price: "",
+  price: "",       // ✅ added
   salePrice: "",
+  stock: "",       // ✅ correct key now
+  volume: "",      // ✅ added
   averageReview: 0,
 };
 const AdminProducts = () => {
