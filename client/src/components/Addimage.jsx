@@ -94,8 +94,13 @@ const Addimage = ({
         ) : imageLoadingState ? (
           <div className="flex items-center justify-center h-32">
             <Aurora
-        colorStops={["#D8EAD8", "#C8E6C9", "#E8F5E9"]}
-
+              colorStops={[
+                "#C8E6C9",
+                "#A3F7BF",
+                "#FFE9D6",
+                "#FF8AD8",
+                "#E8F5E9",
+              ]}
               blend={3.0}
               amplitude={2.0}
               speed={0.8}

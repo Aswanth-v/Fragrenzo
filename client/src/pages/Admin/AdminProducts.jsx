@@ -7,7 +7,7 @@ import Addimage from "../../components/Addimage.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewProduct, fetchProduct } from "../../redux/Admin/Product-slice";
 import { useToast } from "../../hooks/use-toast"
-
+import ProductCard from "../../components/Product-Card";
 
 const initialFormData = {
   image: null,
@@ -58,9 +58,9 @@ const AdminProducts = () => {
   
   return (
     <Fragment>
-      <div className="mb-b w-full flex justify-end">
+      <div className="mb-5 w-full flex justify-end">
         <Button onClick={() => setProdutDialoge(true)}>Add-Products</Button>
-        <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-4"></div>
+
         <Sheet
           open={productDialoge}
           onOpenChange={() => {
@@ -82,9 +82,9 @@ const AdminProducts = () => {
             <div className="py-6">
          <Form
               onSubmit={onSubmit}
-              formdata={addFragrensFormElements} // ✅ field config
-              data={formData}                   // ✅ current form state
-              setData={setFormData}             // ✅ state updater
+              formdata={addFragrensFormElements}
+              data={formData}                  
+              setData={setFormData}             
               buttonText="Add"
             />
 
@@ -92,6 +92,16 @@ const AdminProducts = () => {
           </SheetContent>
         </Sheet>
       </div>
+             <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-4">
+        {
+  productList && productList.length > 0 ? (
+    productList.map((productListItem) => (
+      <ProductCard key={productListItem._id} product={productListItem} />
+    ))
+  ) : null
+}
+
+        </div>
     </Fragment>
   );
 };
