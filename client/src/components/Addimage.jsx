@@ -54,7 +54,7 @@ const Addimage = ({
       console.log(response, "response");
 
       if (response?.data?.success) {
-        setUploadedImageUrl(response.data.result.url);
+        setImageUrl(response.data.result.url);
       }
     } catch (error) {
       console.error("Upload failed:", error);

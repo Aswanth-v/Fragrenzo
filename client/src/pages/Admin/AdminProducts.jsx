@@ -1,9 +1,13 @@
 import { Button } from "../../components/ui/button";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetHeader } from "../../components/ui/sheet";
 import Form from "../../components/ui/Form";
 import { addFragrensFormElements } from "../../config/RegisterformControlls";
 import Addimage from "../../components/Addimage.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewProduct, fetchProduct } from "../../redux/Admin/Product-slice";
+import { useToast } from "../../hooks/use-toast"
+
 
 const initialFormData = {
   image: null,
@@ -21,9 +25,36 @@ const AdminProducts = () => {
   const [imageFile,setImageFile]=useState(null)
   const [imageurl,setImageUrl]=useState('')
   const [imageLoadingState, setImageLoadingState] = useState(false);
+   const { productList } = useSelector(state => state.adminProducts); 
+  const dispatch=useDispatch()
+   const { toast } = useToast()
+   
 
-  const onSubmit = () => {};
-  console.log(formData);
+  
+  const onSubmit = (event) => {
+    event.preventDefault()
+    dispatch(addNewProduct({
+      ...formData,
+      image:imageurl
+    })).then((data)=>{
+      console.log(data);
+      if(data?.payload?.success){
+        dispatch(fetchProduct())
+        setProdutDialoge(false)
+        setImageFile(null)
+        setFormData(initialFormData)
+          toast({
+            title: 'Product added',
+            variant: "success",
+          });
+      }
+    })
+  }
+
+  useEffect(()=>{
+    dispatch(fetchProduct())
+  },[dispatch])
+  console.log(productList,imageurl);
   
   return (
     <Fragment>
