@@ -4,53 +4,73 @@ import axios from "axios";
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-   user: null
+  user: null,
 };
 
-export const userRegisterAction=createAsyncThunk('/auth/register',
+export const userRegisterAction = createAsyncThunk(
+  "/auth/register",
 
-  async(data)=>{
-    const response =await axios.post('http://localhost:5000/api/auth/register',
+  async (data) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/register",
       data,
       {
-        withCredentials:true,
+        withCredentials: true,
       }
-    )
-    return response.data
+    );
+    return response.data;
   }
-)
+);
 
+export const userLoginAction = createAsyncThunk(
+  "/auth/login",
 
-
-export const userLoginAction=createAsyncThunk('/auth/login',
-
-  async(data)=>{
-    const response =await axios.post('http://localhost:5000/api/auth/login',
+  async (data) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
       data,
       {
-        withCredentials:true,
+        withCredentials: true,
       }
-    )
-    return response.data
+    );
+    return response.data;
   }
-)
+);
 
-export const authCheck=createAsyncThunk('/auth/authcheck',
+export const authCheck = createAsyncThunk(
+  "/auth/authcheck",
 
-  async()=>{
-    const response =await axios.get('http://localhost:5000/api/auth/auth-check',
-      
+  async () => {
+    const response = await axios.get(
+      "http://localhost:5000/api/auth/auth-check",
+
       {
-        withCredentials:true,
-       headers: {
-  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-}
-
+        withCredentials: true,
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
       }
-    )
-    return response.data
+    );
+    return response.data;
   }
-)
+);
+
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+
+  async () => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/logout-user",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -79,44 +99,43 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
 
-
-       .addCase(userLoginAction.pending, (state) => {
+      .addCase(userLoginAction.pending, (state) => {
         state.isLoading = true;
       })
-    .addCase(userLoginAction.fulfilled, (state, action) => {
-  state.isLoading = false;
-  state.user = action.payload.success ? action.payload.user : null;
-  state.isAuthenticated = action.payload.success;
-})
+      .addCase(userLoginAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success;
+      })
       .addCase(userLoginAction.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
       })
 
-
       .addCase(authCheck.pending, (state) => {
         state.isLoading = true;
       })
-.addCase(authCheck.fulfilled, (state, action) => {
-  console.log("AuthCheck Success:", action.payload); // 👈 Debug this
-  state.isLoading = false;
-  state.user = action.payload.success ? action.payload.user : null;
-  state.isAuthenticated = action.payload.success;
-})
-
+      .addCase(authCheck.fulfilled, (state, action) => {
+        console.log("AuthCheck Success:", action.payload); // 👈 Debug this
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success;
+      })
 
       .addCase(authCheck.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
-      });
+      })
+        .addCase(logoutUser.fulfilled, (state, action) => {
+
+        state.isLoading = false;
+        state.user =  null;
+        state.isAuthenticated =false
+      })
   },
 });
-
-
-
-
 
 export const { setAuthenticated, setLoading } = authSlice.actions;
 
