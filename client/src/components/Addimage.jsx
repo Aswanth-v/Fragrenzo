@@ -15,8 +15,11 @@ const Addimage = ({
   setUploadedImageUrl,
   setImageLoadingState,
   imageLoadingState,
+  isediting
 }) => {
   const inputRef = useRef(null);
+  console.log(isediting,'isediting');
+  
 
   const imageFileChange = (event) => {
     const selectedFile = event.target.files?.[0];
@@ -59,7 +62,7 @@ const Addimage = ({
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {
-      setImageLoadingState(false); // ✅ Always reset
+      setImageLoadingState(false); //  Always reset
     }
   }
 
@@ -81,6 +84,7 @@ const Addimage = ({
           className="hidden"
           ref={inputRef}
           onChange={imageFileChange}
+          disabled={isediting}
         />
 
         {!imageFile ? (

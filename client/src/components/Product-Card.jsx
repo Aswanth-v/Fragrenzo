@@ -4,15 +4,15 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 const ProductCard = ({
   product,
   setFormData,
-  setOpenCreateProductsDialog,
-  setCurrentEditedId,
+  setProdutDialoge,
+  setEditedId,
   handleDelete,
 }) => {
   if (!product) return null;
 
   const handleEdit = () => {
-    setOpenCreateProductsDialog(true);
-    setCurrentEditedId(product._id);
+    setProdutDialoge(true);
+    setEditedId(product._id);
     setFormData(product);
   };
 

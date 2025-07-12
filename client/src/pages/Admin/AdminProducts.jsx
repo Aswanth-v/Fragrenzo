@@ -5,59 +5,77 @@ import Form from "../../components/ui/Form";
 import { addFragrensFormElements } from "../../config/RegisterformControlls";
 import Addimage from "../../components/Addimage.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewProduct, fetchProduct } from "../../redux/Admin/Product-slice";
-import { useToast } from "../../hooks/use-toast"
+import { addNewProduct, editProduct, fetchProduct } from "../../redux/Admin/Product-slice";
+import { useToast } from "../../hooks/use-toast";
 import ProductCard from "../../components/Product-Card";
 
 const initialFormData = {
-   image: null,
+  image: null,
   title: "",
   description: "",
   category: "",
   brand: "",
-  price: "",       // ✅ added
+  price: "",
   salePrice: "",
-  stock: "",       // ✅ correct key now
-  volume: "",      // ✅ added
+  stock: "",
+  volume: "",
   averageReview: 0,
 };
+
 const AdminProducts = () => {
   const [productDialoge, setProdutDialoge] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [imageFile,setImageFile]=useState(null)
-  const [imageurl,setImageUrl]=useState('')
+  const [imageFile, setImageFile] = useState(null);
+  const [imageurl, setImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-   const { productList } = useSelector(state => state.adminProducts); 
-  const dispatch=useDispatch()
-   const { toast } = useToast()
-   
+  const [editedId, setEditedId] = useState(null);
 
-  
+  const { productList } = useSelector((state) => state.adminProducts);
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
   const onSubmit = (event) => {
-    event.preventDefault()
-    dispatch(addNewProduct({
-      ...formData,
-      image:imageurl
-    })).then((data)=>{
-      console.log(data);
-      if(data?.payload?.success){
-        dispatch(fetchProduct())
-        setProdutDialoge(false)
-        setImageFile(null)
-        setFormData(initialFormData)
+    event.preventDefault();
+
+    if (editedId !== null) {
+      dispatch(editProduct({ id: editedId, formData })).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchProduct());
+          setFormData(initialFormData);
+          setProdutDialoge(false);
+          setEditedId(null);
           toast({
-            title: 'Product added',
+            title: "Product updated",
             variant: "success",
           });
-      }
-    })
-  }
+        }
+      });
+    } else {
+      dispatch(
+        addNewProduct({
+          ...formData,
+          image: imageurl,
+        })
+      ).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchProduct());
+          setProdutDialoge(false);
+          setImageFile(null);
+          setImageUrl("");
+          setFormData(initialFormData);
+          toast({
+            title: "Product added",
+            variant: "success",
+          });
+        }
+      });
+    }
+  };
 
-  useEffect(()=>{
-    dispatch(fetchProduct())
-  },[dispatch])
-  console.log(productList,imageurl);
-  
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch]);
+
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -67,43 +85,54 @@ const AdminProducts = () => {
           open={productDialoge}
           onOpenChange={() => {
             setProdutDialoge(false);
+            setEditedId(null);
+            setFormData(initialFormData);
+            setImageFile(null);
+            setImageUrl("");
           }}
         >
           <SheetContent side="right" className="overflow-auto">
-            <SheetHeader>Add-Products</SheetHeader>
-<Addimage
-  imageFile={imageFile}
-  setImageFile={setImageFile}
-  imageurl={imageurl}
-  setImageUrl={setImageUrl}
-  imageLoadingState={imageLoadingState}
- setImageLoadingState={setImageLoadingState}
- imageLoadingStat={imageLoadingState}
-/>
+            <SheetHeader>{editedId ? "Edit Product" : "Add Product"}</SheetHeader>
+
+            {/* ✅ Only show Addimage when NOT editing */}
+            {editedId === null && (
+              <Addimage
+                imageFile={imageFile}
+                setImageFile={setImageFile}
+                imageurl={imageurl}
+                setImageUrl={setImageUrl}
+                imageLoadingState={imageLoadingState}
+                setImageLoadingState={setImageLoadingState}
+                imageLoadingStat={imageLoadingState}
+                isediting={editedId !== null}
+              />
+            )}
 
             <div className="py-6">
-         <Form
-              onSubmit={onSubmit}
-              formdata={addFragrensFormElements}
-              data={formData}                  
-              setData={setFormData}             
-              buttonText="Add"
-            />
-
+              <Form
+                onSubmit={onSubmit}
+                formdata={addFragrensFormElements}
+                data={formData}
+                setData={setFormData}
+                buttonText={editedId ? "Edit" : "Add"}
+              />
             </div>
           </SheetContent>
         </Sheet>
       </div>
-             <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {
-  productList && productList.length > 0 ? (
-    productList.map((productListItem) => (
-      <ProductCard key={productListItem._id} product={productListItem} />
-    ))
-  ) : null
-}
 
-        </div>
+      <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-4">
+        {productList && productList.length > 0 &&
+          productList.map((productListItem) => (
+            <ProductCard
+              key={productListItem._id}
+              product={productListItem}
+              setEditedId={setEditedId}
+              setProdutDialoge={setProdutDialoge}
+              setFormData={setFormData}
+            />
+          ))}
+      </div>
     </Fragment>
   );
 };
