@@ -5,7 +5,7 @@ import Form from "../../components/ui/Form";
 import { addFragrensFormElements } from "../../config/RegisterformControlls";
 import Addimage from "../../components/Addimage.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewProduct, editProduct, fetchProduct } from "../../redux/Admin/Product-slice";
+import { addNewProduct, editProduct, fetchProduct,deleteProduct } from "../../redux/Admin/Product-slice";
 import { useToast } from "../../hooks/use-toast";
 import ProductCard from "../../components/Product-Card";
 
@@ -46,7 +46,6 @@ const AdminProducts = () => {
           setEditedId(null);
           toast({
             title: "Product updated",
-            variant: "success",
           });
         }
       });
@@ -76,6 +75,15 @@ const AdminProducts = () => {
     dispatch(fetchProduct());
   }, [dispatch]);
 
+
+  const productDelete=(getCurrentProductId)=>{
+    dispatch(deleteProduct(getCurrentProductId)).then((data)=>{
+      if(data?.payload?.success){
+        dispatch(fetchProduct())
+      }
+    })
+    
+  }
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -130,6 +138,7 @@ const AdminProducts = () => {
               setEditedId={setEditedId}
               setProdutDialoge={setProdutDialoge}
               setFormData={setFormData}
+              productDelete={productDelete}
             />
           ))}
       </div>

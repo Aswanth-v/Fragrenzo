@@ -6,7 +6,7 @@ const ProductCard = ({
   setFormData,
   setProdutDialoge,
   setEditedId,
-  handleDelete,
+  productDelete,
 }) => {
   if (!product) return null;
 
@@ -78,7 +78,7 @@ const ProductCard = ({
         </Button>
         <Button
           variant="destructive"
-          onClick={() => handleDelete(product._id)}
+          onClick={() => productDelete(product._id)}
           className="text-sm px-4 py-2"
         >
           Delete
