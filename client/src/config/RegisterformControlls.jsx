@@ -133,3 +133,36 @@ export const addFragrensFormElements = [
     placeholder: "Enter available stock",
   }
 ];
+
+export const shoppingViewHeaderMenuItems = [
+  {
+    id: "home",
+    label: "Home",
+    path: "/shop/home",
+  },
+  {
+    id: "products",
+    label: "Products",
+    path: "/shop/list",
+  },
+  {
+    id: "men",
+    label: "Men",
+    path: "/shop/list",
+  },
+  {
+    id: "women",
+    label: "Women",
+    path: "/shop/list",
+  },
+  {
+    id: "unisex",
+    label: "unisex",
+    path: "/shop/list",
+  },
+  {
+    id: "search",
+    label: "Search",
+    path: "/shop/search",
+  },
+];
