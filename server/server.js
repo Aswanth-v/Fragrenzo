@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRouter from './routes/auth/Auth-routes.js';
 import adminProductsRouter from './routes/admin/products-routes.js'
-
+import shopProductrouter from './routes/shop/products-route.js'
 dotenv.config();
 
 const app = express();
@@ -33,6 +33,7 @@ app.use(express.json());
 // ✅ Routes
 app.use('/api/auth', authRouter);
 app.use("/api/admin/products", adminProductsRouter);
+app.use("/api/shop/products", shopProductrouter);
 
 
 // ✅ MongoDB connection

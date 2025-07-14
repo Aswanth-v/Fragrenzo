@@ -23,32 +23,47 @@ const ProductCard = ({
         <img
           src={product?.image}
           alt={product?.title || "Product image"}
-          className="w-full h-[300px] object-cover rounded-t-lg"
+          className="w-full h-[250px] object-cover"
         />
       </div>
 
       {/* Product Info */}
       <CardContent className="p-4">
-        <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
+        <h2 className="text-lg font-semibold text-gray-900 truncate">
+          {product?.brand}
+        </h2>
 
-        <div className="flex justify-between items-center mb-2 text-[16px] text-muted-foreground">
-          <span>{product?.category}</span>
-          <span>{product?.brand}</span>
-        </div>
+        <p className="text-sm text-gray-500 line-clamp-2 mt-1">
+          {product?.volume}-ml
+        </p>
 
-        <div className="flex justify-between items-center">
-          <span
-            className={`${
-              product?.salePrice > 0 ? "line-through" : ""
-            } text-lg font-semibold text-primary`}
-          >
-            ₹{product?.price}
-          </span>
-          {product?.salePrice > 0 && (
-            <span className="text-lg font-semibold text-primary">
-              ₹{product?.salePrice}
+        <div className="flex items-center justify-between mt-3">
+          {product?.salePrice ? (
+            <div className="flex flex-col">
+              <span className="text-sm line-through text-gray-400">
+                ${product?.price}
+              </span>
+              <span className="text-base font-semibold text-green-600">
+                ${product?.salePrice}
+              </span>
+            </div>
+          ) : (
+            <span className="text-base font-medium text-gray-800">
+              ₹{product?.price ?? "N/A"}
             </span>
           )}
+
+          <span
+            className={`text-sm font-medium ${
+              product?.stock && product.stock > 0
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            {product?.stock && product.stock > 0
+              ? "Stock Available"
+              : "Out of Stock"}
+          </span>
         </div>
       </CardContent>
 
