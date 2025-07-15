@@ -6,20 +6,22 @@ import { Separator } from "./ui/separator";
 
 const ProductFilter = ({ filters, handleFilter }) => {
   return (
-    <div className="bg-background rounded-lg shadow-sm">
+    <div className="bg-background rounded-lg shadow-sm border">
       <div className="p-4 border-b">
-        <h2 className="text-lg font-extrabold">Filters</h2>
+        <h2 className="text-lg font-bold">Filters</h2>
       </div>
-      <div className="p-4 space-y-4">
+
+      <div className="p-4 space-y-6">
         {Object.keys(filterOptions).map((keyItem) => (
           <Fragment key={keyItem}>
-            <div>
-              <h3 className="text-base font-bold">{keyItem}</h3>
-              <div className="grid gap-2 mt-2">
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold">{keyItem}</h3>
+
+              <div className="flex flex-col gap-2">
                 {filterOptions[keyItem].map((option) => (
                   <Label
-                    className="flex font-medium items-center gap-2"
                     key={option.id}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
                   >
                     <Checkbox
                       checked={
@@ -35,7 +37,7 @@ const ProductFilter = ({ filters, handleFilter }) => {
                 ))}
               </div>
             </div>
-            <Separator />
+            <Separator className="my-2" />
           </Fragment>
         ))}
       </div>

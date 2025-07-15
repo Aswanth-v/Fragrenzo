@@ -13,8 +13,11 @@ import {
 } from "../../components/ui/dropdown-menu";
 import { Button } from "../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProducts } from "../../redux/Shop/product-slice";
-
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "../../redux/Shop/product-slice";
+import ProductDetails from "../../components/Product-details";
 
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
@@ -22,29 +25,28 @@ function createSearchParamsHelper(filterParams) {
   for (const [key, value] of Object.entries(filterParams)) {
     if (Array.isArray(value) && value.length > 0) {
       const paramValue = value.join(",");
-
       queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
     }
   }
 
-  console.log(queryParams, "queryParams");
-
   return queryParams.join("&");
 }
 
-
 const Listing = () => {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.shopProducts);
-  const [filters,setFilters]=useState({})
-  const [sort,setSort]=useState(null)
-    const [searchParams, setSearchParams] = useSearchParams();
+  const { productList, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false); // ✅
 
-  const handleSort=(value)=>{
-  setSort(value)    
-  }
+  const handleSort = (value) => {
+    setSort(value);
+  };
 
- const  handleFilter=(getSectionId, getCurrentOption)=> {
+  const handleFilter = (getSectionId, getCurrentOption) => {
     let cpyFilters = { ...filters };
     const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
 
@@ -64,36 +66,39 @@ const Listing = () => {
 
     setFilters(cpyFilters);
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
-  }
+  };
+
   useEffect(() => {
     setSort("price-lowtohigh");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, []);
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
       setSearchParams(new URLSearchParams(createQueryString));
     }
   }, [filters]);
 
- useEffect(() => {
+  useEffect(() => {
     if (filters !== null && sort !== null)
       dispatch(
         fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
       );
   }, [dispatch, sort, filters]);
+console.log(productDetails);
 
+  
+  const handleGetProductDetails = (getCurrentProductId) => {
+    if (!getCurrentProductId) {
+      console.error("❌ No product ID provided to fetchProductDetails");
+      return;
+    }
 
-
-
-
-
-
-
-  const handleGetProductDetails = (product) => {
-    console.log("Get product details:", product);
+    console.log("📦 Get product details:", getCurrentProductId);
+    dispatch(fetchProductDetails(getCurrentProductId)).then(() => {
+      setOpenDetailsDialog(true); // ✅ Open the dialog after details are fetched
+    });
   };
 
   const handleAddToCart = (product) => {
@@ -126,31 +131,46 @@ const Listing = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-             <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
-  {sortOptions.map((sortItem) => (
-    <DropdownMenuRadioItem value={sortItem.id} key={sortItem.id}>
-      {sortItem.label}
-    </DropdownMenuRadioItem>
-  ))}
-</DropdownMenuRadioGroup>
+                <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
+                  {sortOptions.map((sortItem) => (
+                    <DropdownMenuRadioItem
+                      value={sortItem.id}
+                      key={sortItem.id}
+                    >
+                      {sortItem.label}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {Array.isArray(productList) && productList.length > 0
-            ? productList.map((productItem) => (
-                <ShopProductCard
-                  key={productItem._id}
-                  product={productItem}
-                  handleAddToCart={handleAddToCart}
-                  handleBuyNow={handleBuyNow}
-                />
-              ))
-            : <p className="col-span-full text-center text-muted-foreground">No products found.</p>}
+          {Array.isArray(productList) && productList.length > 0 ? (
+            productList.map((productItem) => (
+              <ShopProductCard
+                key={productItem._id}
+                product={productItem}
+                handleAddToCart={handleAddToCart}
+                handleBuyNow={handleBuyNow}
+                handleGetProductDetails={handleGetProductDetails} // ✅ Pass the handler
+              />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-muted-foreground">
+              No products found.
+            </p>
+          )}
         </div>
       </div>
+
+      {/* ✅ PRODUCT DETAILS POPUP */}
+      <ProductDetails
+        open={openDetailsDialog}
+        setOpen={setOpenDetailsDialog}
+        productDetails={productDetails}
+      />
     </div>
   );
 };

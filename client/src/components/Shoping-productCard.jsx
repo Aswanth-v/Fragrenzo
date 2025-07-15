@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { categoryOptionsMap, brandOptionsMap } from "../config/RegisterformControlls"; // ✅ update path
 
-const ShopProductCard = ({ product, handleAddToCart, handleBuyNow }) => {
+const ShopProductCard = ({ product, handleAddToCart, handleBuyNow ,handleGetProductDetails}) => {
   if (!product) return null;
 
   // Determine stock label and color
@@ -27,7 +27,7 @@ const ShopProductCard = ({ product, handleAddToCart, handleBuyNow }) => {
   return (
     <Card className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-300 border border-muted">
       {/* Product Image */}
-      <div className="relative">
+      <div className="relative" onClick={()=>handleGetProductDetails(product?._id)}>
         <img
           src={product?.image}
           alt={product?.title || "Product image"}
