@@ -43,7 +43,7 @@ const App = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col overflow">
+    <div className="flex flex-coloverflow-y-scroll scrollbar-hide">
       <Routes>
         {/* ✅ Root path handling */}
         <Route

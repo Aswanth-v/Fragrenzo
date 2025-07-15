@@ -211,3 +211,62 @@ export const filterOptions = {
     { id: "sweet-aura", label: "Sweet Aura" },
   ],
 };
+
+
+export const categoryOptionsMap = {
+  men: "Men",
+  women: "Women",
+  unisex: "Unisex",
+};
+
+export const brandOptionsMap = {
+  chanel: "Chanel",
+  dior: "Dior",
+  gucci: "Gucci",
+  armani: "Armani",
+  versace: "Versace",
+  "tom-ford": "Tom Ford",
+  ysl: "Yves Saint Laurent",
+  "calvin-klein": "Calvin Klein",
+  "hugo-boss": "Hugo Boss",
+  "dolce-gabbana": "Dolce & Gabbana",
+  burberry: "Burberry",
+  hermes: "Hermès",
+  "jo-malone": "Jo Malone",
+  bvlgari: "Bvlgari",
+  prada: "Prada",
+  lacoste: "Lacoste",
+  "mont-blanc": "Mont Blanc",
+  coach: "Coach",
+  "paco-rabanne": "Paco Rabanne",
+  givenchy: "Givenchy",
+  "carolina-herrera": "Carolina Herrera",
+  mugler: "Mugler",
+  "ralph-lauren": "Ralph Lauren",
+  zara: "Zara",
+  "issey-miyake": "Issey Miyake",
+  "salvatore-ferragamo": "Salvatore Ferragamo",
+  "tiffany-co": "Tiffany & Co.",
+  "victoria-secret": "Victoria’s Secret",
+  "john-varvatos": "John Varvatos",
+  "marc-jacobs": "Marc Jacobs",
+  "floral-essence": "Floral Essence",
+  "fresh-wave": "Fresh Wave",
+  "luxury-notes": "Luxury Notes",
+  zesty: "Zesty",
+  "sweet-aura": "Sweet Aura",
+};
+
+export const sortOptionsMap = {
+  "price-lowtohigh": "Price: Low to High",
+  "price-hightolow": "Price: High to Low",
+  "title-atoz": "Title: A to Z",
+  "title-ztoa": "Title: Z to A",
+};
+
+export const sortOptions = [
+  { id: "price-lowtohigh", label: "Price: Low to High" },
+  { id: "price-hightolow", label: "Price: High to Low" },
+  { id: "newest", label: "Newest First" },
+  { id: "oldest", label: "Oldest First" }
+];

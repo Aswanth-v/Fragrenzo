@@ -4,7 +4,7 @@ import ShoppingHeader from './ShoppingHeader';
 
 const ShoppingLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen w-full bg-background overflow-hidden">
+    <div className="flex flex-col min-h-screen w-full bg-background overflow-hidden ">
       {/* Header at the top */}
       <ShoppingHeader />
 
