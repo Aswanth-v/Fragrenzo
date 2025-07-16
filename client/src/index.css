@@ -9,7 +9,6 @@ Base Theme (Light + Dark Mode)
   :root {
     /* Tailwind HSL variables for LIGHT theme */
   --background: 30 80% 85%; /* hsl(30, 80%, 85%) --> #FFE3CF */
-
     --foreground: 222.2 84% 4.9%; /* hsl(222.2, 84%, 4.9%) */
     --card: 0 0% 100%; /* hsl(0, 0%, 100%) */
     --card-foreground: 222.2 84% 4.9%; /* hsl(222.2, 84%, 4.9%) */

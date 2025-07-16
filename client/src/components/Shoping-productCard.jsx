@@ -25,7 +25,7 @@ const ShopProductCard = ({ product, handleAddToCart, handleBuyNow ,handleGetProd
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-300 border border-muted">
+    <Card className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-secondary shadow-sm hover:shadow-md transition-shadow duration-300 border border-muted">
       {/* Product Image */}
       <div className="relative" onClick={()=>handleGetProductDetails(product?._id)}>
         <img
@@ -74,7 +74,7 @@ const ShopProductCard = ({ product, handleAddToCart, handleBuyNow ,handleGetProd
       {/* Buttons */}
       <CardFooter className="flex justify-between gap-2 px-4 pb-4">
         <Button
-          onClick={() => handleAddToCart(product)}
+          onClick={() => handleAddToCart(product?._id)}
           disabled={product.stock <= 0}
           className="w-full text-sm"
         >

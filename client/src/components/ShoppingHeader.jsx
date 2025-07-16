@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { House, Menu, ShoppingCart, LogOut,UserCog } from "lucide-react";
 import {
   Link,
@@ -22,6 +22,8 @@ import {
 
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { logoutUser } from "../redux/Authslice";
+import Cartwrapp from "./Cart-wrapp";
+import { fetchCartItems } from "../redux/Shop/Cart-slice";
 
 const MenuItems = () => {
     const navigate = useNavigate();
@@ -39,16 +41,24 @@ const MenuItems = () => {
 const HeaderRight = ({ user }) => {
   const dispatch = useDispatch(); // ✅ Use inside the component
    const navigate = useNavigate();
+     const {cartItems}=useSelector(state=>state.shopCart)
+   const[openCartSheet,setOpenCartSheet]=useState(false)
   const handleLogout = () => {
     dispatch(logoutUser());
   };
-
+useEffect(()=>{
+dispatch(fetchCartItems(user?.id))
+},[dispatch])
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-      <Button variant="outline" size="icon" className="hidden lg:inline-flex">
+      <Sheet open={openCartSheet} onOpenChange={()=>setOpenCartSheet(false)}>
+  <Button variant="outline" size="icon" className="hidden lg:inline-flex" onClick={()=>setOpenCartSheet(true)}>
         <ShoppingCart className="w-6 h-6" />
         <span className="sr-only">User Cart</span>
       </Button>
+      <Cartwrapp cartItems={cartItems && cartItems.items && cartItems.items.length>0 ? cartItems.items :[]}/>
+      </Sheet>
+    
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

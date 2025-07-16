@@ -17,7 +17,7 @@ const ProductCard = ({
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-300 border border-muted">
+    <Card className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-secondary shadow-sm hover:shadow-md transition-shadow duration-300 border border-muted">
       {/* Product Image */}
       <div className="relative">
         <img

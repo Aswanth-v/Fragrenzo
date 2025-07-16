@@ -18,6 +18,7 @@ import {
   fetchProductDetails,
 } from "../../redux/Shop/product-slice";
 import ProductDetails from "../../components/Product-details";
+import { addToCart, fetchCartItems } from "../../redux/Shop/Cart-slice";
 
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
@@ -34,9 +35,12 @@ function createSearchParamsHelper(filterParams) {
 
 const Listing = () => {
   const dispatch = useDispatch();
+ 
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const {user}=useSelector(state=>state.auth)
+
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,6 +71,8 @@ const Listing = () => {
     setFilters(cpyFilters);
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   };
+
+
 
   useEffect(() => {
     setSort("price-lowtohigh");
@@ -101,13 +107,21 @@ console.log(productDetails);
     });
   };
 
-  const handleAddToCart = (product) => {
-    console.log("Add to cart:", product);
+  const handleAddToCart = (getCurrentProductId) => {
+    console.log("Add to cart:", getCurrentProductId);
+    dispatch(addToCart({userId:user?.id ,productId:getCurrentProductId,quantity:1})).then((data)=>{
+ 
+      if(data?.payload?.success){
+           dispatch(fetchCartItems(user?.id))
+      }
+      
+    })
   };
 
   const handleBuyNow = (product) => {
     console.log("Buy now:", product);
   };
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -155,6 +169,7 @@ console.log(productDetails);
                 handleAddToCart={handleAddToCart}
                 handleBuyNow={handleBuyNow}
                 handleGetProductDetails={handleGetProductDetails} // ✅ Pass the handler
+               
               />
             ))
           ) : (
