@@ -40,7 +40,7 @@ const Listing = () => {
     (state) => state.shopProducts
   );
   const {user}=useSelector(state=>state.auth)
-
+  const { cartItems } = useSelector((state) => state.shopCart);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -169,6 +169,7 @@ console.log(productDetails);
                 handleAddToCart={handleAddToCart}
                 handleBuyNow={handleBuyNow}
                 handleGetProductDetails={handleGetProductDetails} // ✅ Pass the handler
+                     cartItems={cartItems.items || []} // ✅ pass cart items
                
               />
             ))

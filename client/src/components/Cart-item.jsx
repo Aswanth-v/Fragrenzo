@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItem, updateCartQuantity } from '../redux/Shop/Cart-slice';
 import { useToast } from "../hooks/use-toast"
 
-const UserCartItemsContent=({ cartItem })=> {
+const UserCartItemsContent = ({ cartItem }) => {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { productList } = useSelector((state) => state.shopProducts);
@@ -12,31 +12,37 @@ const UserCartItemsContent=({ cartItem })=> {
   const { toast } = useToast();
 
   function handleUpdateQuantity(getCartItem, typeOfAction) {
-    if (typeOfAction == "plus") {
-      let getCartItems = cartItems.items || [];
+    const getCartItems = cartItems.items || [];
 
-      if (getCartItems.length) {
-        const indexOfCurrentCartItem = getCartItems.findIndex(
-          (item) => item.productId === getCartItem?.productId
-        );
+    // Only check stock if trying to increment
+    if (typeOfAction === "plus") {
+      const indexOfCurrentCartItem = getCartItems.findIndex(
+        (item) => item.productId === getCartItem?.productId
+      );
 
-        const getCurrentProductIndex = productList.findIndex(
-          (product) => product._id === getCartItem?.productId
-        );
-        const getTotalStock = productList[getCurrentProductIndex].totalStock;
+      const matchedProduct = productList.find(
+        (product) => product._id === getCartItem?.productId
+      );
 
-        console.log(getCurrentProductIndex, getTotalStock, "getTotalStock");
+      if (!matchedProduct) {
+        toast({
+          title: "Product not found",
+          variant: "destructive",
+        });
+        return;
+      }
 
-        if (indexOfCurrentCartItem > -1) {
-          const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
-          if (getQuantity + 1 > getTotalStock) {
-            toast({
-              title: `Only ${getQuantity} quantity can be added for this item`,
-              variant: "destructive",
-            });
+      const getTotalStock = matchedProduct.totalStock || matchedProduct.stock || 0;
 
-            return;
-          }
+      if (indexOfCurrentCartItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+
+        if (getQuantity + 1 > getTotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+          return;
         }
       }
     }
@@ -53,7 +59,7 @@ const UserCartItemsContent=({ cartItem })=> {
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Cart item is updated successfully",
+          title: "Cart item updated successfully",
         });
       }
     });
@@ -65,11 +71,16 @@ const UserCartItemsContent=({ cartItem })=> {
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Cart item is deleted successfully",
+          title: "Cart item deleted successfully",
         });
       }
     });
   }
+
+  const matchedProduct = productList.find(
+    (product) => product._id === cartItem?.productId
+  );
+  const stock = matchedProduct?.totalStock || matchedProduct?.stock || 0;
 
   return (
     <div className="flex items-center space-x-4">
@@ -80,6 +91,16 @@ const UserCartItemsContent=({ cartItem })=> {
       />
       <div className="flex-1">
         <h3 className="font-extrabold">{cartItem?.title}</h3>
+
+        {/* Stock badge */}
+        {stock === 0 ? (
+          <span className="text-red-500 font-semibold text-xs">Out of Stock</span>
+        ) : stock <= 5 ? (
+          <span className="text-yellow-600 font-semibold text-xs">
+            Only {stock} left!
+          </span>
+        ) : null}
+
         <div className="flex items-center gap-2 mt-1">
           <Button
             variant="outline"
@@ -91,20 +112,28 @@ const UserCartItemsContent=({ cartItem })=> {
             <Minus className="w-4 h-4" />
             <span className="sr-only">Decrease</span>
           </Button>
+
           <span className="font-semibold">{cartItem?.quantity}</span>
+
           <Button
             variant="outline"
             className="h-8 w-8 rounded-full"
             size="icon"
             onClick={() => handleUpdateQuantity(cartItem, "plus")}
+            disabled={cartItem?.quantity >= stock}
           >
             <Plus className="w-4 h-4" />
-            <span className="sr-only">Decrease</span>
+            <span className="sr-only">Increase</span>
           </Button>
         </div>
       </div>
+
       <div className="flex flex-col items-end">
-        <p className="font-semibold">
+        <p
+          className={`font-semibold ${
+            stock === 0 ? "text-gray-400 line-through" : ""
+          }`}
+        >
           ₹
           {(
             (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
@@ -119,6 +148,6 @@ const UserCartItemsContent=({ cartItem })=> {
       </div>
     </div>
   );
-}
+};
 
 export default UserCartItemsContent;
