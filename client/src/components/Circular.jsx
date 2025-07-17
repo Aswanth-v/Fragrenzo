@@ -325,18 +325,18 @@ class App {
   }
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const defaultItems = [
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667413/fragrance-shope/xzoagoju8bhl3bqclphz.jpg`, text: "Bridge" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752665436/fragrance-shope/an97p2yxysso6mibu0un.jpg`, text: "Desk Setup" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667233/fragrance-shope/focp3yio4fmuurzkh4o8.jpg`, text: "Waterfall" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752663905/fragrance-shope/f0ph31y87leweq8kvy3b.jpg`, text: "Strawberries" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667280/fragrance-shope/rortudgig75sxzlushh2.jpg`, text: "Deep Diving" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752666184/fragrance-shope/ggg6w5ccwgpv0thfzaf2.jpg`, text: "Train Track" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667364/fragrance-shope/whfeqcczi90ocpaln0fk.jpg`, text: "Santorini" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667327/fragrance-shope/ryyr8ii00aabblj97jes.jpg`, text: "Blurry Lights" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667195/fragrance-shope/jzthbvjxqxfo44rnlqm2.jpg`, text: "New York" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664800/fragrance-shope/m3bzwzfpsrry40lakr1c.jpg`, text: "Good Boy" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664721/fragrance-shope/jzxje4w8k27gnxtkexbl.jpg`, text: "Coastline" },
-      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664158/fragrance-shope/fdli5e7gexakvadjckpd.jpg`, text: "Palm Trees" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667413/fragrance-shope/xzoagoju8bhl3bqclphz.jpg`, text: "ralph-lauren" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752665436/fragrance-shope/an97p2yxysso6mibu0un.jpg`, text: "hugo-boss" },
+    { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667233/fragrance-shope/focp3yio4fmuurzkh4o8.jpg`, text: "carolina-herrera" },
+     { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752663905/fragrance-shope/f0ph31y87leweq8kvy3b.jpg`, text: "chanel" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667280/fragrance-shope/rortudgig75sxzlushh2.jpg`, text: "mugler" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752666184/fragrance-shope/ggg6w5ccwgpv0thfzaf2.jpg`, text: "Bvlgari" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667364/fragrance-shope/whfeqcczi90ocpaln0fk.jpg`, text: "mugler" },
+     { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667327/fragrance-shope/ryyr8ii00aabblj97jes.jpg`, text: "mugler" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752667195/fragrance-shope/jzthbvjxqxfo44rnlqm2.jpg`, text: "carolina-herrera" },
+     { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664800/fragrance-shope/m3bzwzfpsrry40lakr1c.jpg`, text: "tom-ford" },
+      { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664721/fragrance-shope/jzxje4w8k27gnxtkexbl.jpg`, text: "tom-ford" },
+     { image: `http://res.cloudinary.com/ds79netzy/image/upload/v1752664158/fragrance-shope/fdli5e7gexakvadjckpd.jpg`, text: "Gucci" },
     ];
     const galleryItems = items && items.length ? items : defaultItems;
     this.mediasImages = galleryItems.concat(galleryItems);

@@ -53,7 +53,7 @@ const ShopProductCard = ({
       {/* Product Info */}
       <CardContent className="p-4 space-y-2">
         <h2 className="text-xl font-bold text-gray-900 truncate">
-          {brandOptionsMap[product?.brand] || product?.brand}
+          {brandOptionsMap[product?.title] || product?.brand}
         </h2>
 
         <p className="text-sm text-gray-500">{product?.volume}-ml</p>

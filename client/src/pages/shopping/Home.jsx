@@ -6,7 +6,7 @@ import { Button } from "../../components/ui/button";
 import CircularGallery from '../../components/Circular.jsx'
 import { Link } from "react-router-dom";
 import Curved from '../../components/Curved.jsx'
-
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const settings = {
@@ -21,6 +21,10 @@ const Home = () => {
   };
 
   const banners = [Banner1, Banner2, Banner3];
+  const navigate=useNavigate()
+  const gotolist=()=>{
+   navigate('/shop/list')
+  }
   return (
     <div className="w-full">
       {/* Banner Carousel */}
@@ -97,8 +101,11 @@ marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
 
 
 
+<span className="flex justify-center font-bold text-xl sm:text-2xl pt-20">
+Featured Products</span>
 
-<div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[85vh] xl:h-[100vh] max-h-[800px] overflow-hidden">
+
+<div className="relative w-full h-[50vh] sm:h-[30vh] md:h-[70vh] lg:h-[85vh] xl:h-[100vh] max-h-[800px] overflow-hidden"onClick={gotolist}>
   <CircularGallery
     bend={3}
     textColor="#000"
