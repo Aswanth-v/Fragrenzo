@@ -3,7 +3,7 @@ import Banner1 from "../../assets/Banner1.png";
 import Banner2 from "../../assets/Banner2.png";
 import Banner3 from "../../assets/Banner3.png";
 import { Button } from "../../components/ui/button";
-import { useNavigate } from "react-router-dom";
+import CircularGallery from '../../components/Circular.jsx'
 import { Link } from "react-router-dom";
 import Curved from '../../components/Curved.jsx'
 
@@ -49,24 +49,24 @@ marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
   className="text-black"
 />
 </div>
-      <span className="flex justify-center  text-xl sm:texxl font-bold">
-        Categories
-      </span>
+ <span className="flex justify-center text-xl sm:text-2xl font-bold">
+  Categories
+</span>
 
-     <div className="w-full flex flex-wrap justify-center gap-2  md:gap-4 lg:gap-6 py-6">
+<div className="w-full flex flex-wrap justify-center gap-2 md:gap-4 lg:gap-6 py-6">
   {["Men", "Women", "Unisex"].map((label) => (
-    <Link
-      key={label}
-      to={"/shop/list"}
-      className="no-underline"
-    >
-      <Button className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md rounded-full text-base sm:text-lg font-semibold flex items-center justify-center">
+    <Link key={label} to="/shop/list" className="no-underline">
+      <Button className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md rounded-full text-base sm:text-lg font-semibold flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
         {label}
       </Button>
     </Link>
   ))}
 </div>
- <span className="flex justify-center font-bold  text-xl sm:texxl">Collaberation</span>
+
+<span className="flex justify-center font-bold text-xl sm:text-2xl">
+  Collaboration
+</span>
+
 <div className="grid grid-cols-4 gap-4 place-items-center py-6">
   {[
     "Chanel",
@@ -88,13 +88,24 @@ marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
   ].map((brand) => (
     <span
       key={brand}
-      className="w-20 h-20 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md  text-sm font-semibold flex items-center justify-center text-center"
+      className="w-20 h-20 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-lg text-sm font-semibold flex items-center justify-center text-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
     >
       {brand}
     </span>
   ))}
 </div>
 
+
+
+
+<div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[85vh] xl:h-[100vh] max-h-[800px] overflow-hidden">
+  <CircularGallery
+    bend={3}
+    textColor="#000"
+    borderRadius={0.05}
+    scrollEase={0.02}
+  />
+</div>
 
 
 
