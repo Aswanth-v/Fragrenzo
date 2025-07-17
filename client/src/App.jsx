@@ -23,6 +23,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { authCheck } from "./redux/Authslice.js";
 import { Navigate } from "react-router-dom";
 
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 // ✅ Component for handling `/` root path
 const NavigateBasedOnRole = () => {
   const { user } = useSelector((state) => state.auth);

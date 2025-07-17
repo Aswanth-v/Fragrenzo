@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "../hooks/use-toast";
 import { setProductDetails } from "../redux/Shop/product-slice";
 
-function ProductDetails({ open, setOpen, productDetails }) {
+function ProductDetails({ open, setOpen, productDetails,cartItems=[],product }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { user } = useSelector((state) => state.auth);
@@ -42,6 +42,8 @@ function ProductDetails({ open, setOpen, productDetails }) {
     category,
     stock,
   } = productDetails;
+
+
 
   const stockLabel = () => {
     if (stock === null)
@@ -120,13 +122,7 @@ function ProductDetails({ open, setOpen, productDetails }) {
                 Out of Stock
               </Button>
             ) : (
-              <>
-                <Button
-                  className="w-full bg-primary hover:bg-primary/90 text-white text-base font-medium"
-                  onClick={() => handleAddToCart(productDetails._id, stock)}
-                >
-                  Add to Cart
-                </Button>
+              <>  
                 <Button
                   variant="outline"
                   className="w-full text-base font-medium bg-white"

@@ -186,6 +186,8 @@ console.log(productDetails);
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
+        cartItems={cartItems.items || []}
+       
       />
     </div>
   );
