@@ -6,6 +6,8 @@ import { Button } from "../../components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Curved from '../../components/Curved.jsx'
+
+
 const Home = () => {
   const settings = {
     infinite: true,
@@ -19,11 +21,10 @@ const Home = () => {
   };
 
   const banners = [Banner1, Banner2, Banner3];
-  const navigate = useNavigate();
   return (
     <div className="w-full">
       {/* Banner Carousel */}
-      <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+      <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] overflow-hidden">
         <Slider {...settings} className="w-full h-full">
           {banners.map((banner, index) => (
             <div key={index} className="w-full h-full">
@@ -36,7 +37,7 @@ const Home = () => {
           ))}
         </Slider>
       </div>
-<div className="max-h-96">
+<div className="hidden md:block max-h-96 overflow-hidden">
 
      <Curved
 marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
@@ -45,14 +46,14 @@ marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
   curveAmount={-200}
   direction="right"
   interactive={true}
- className="fill-black"
+  className="text-black"
 />
 </div>
-      <span className="flex justify-center  text-xl sm:text-2xl font-bold">
+      <span className="flex justify-center  text-xl sm:texxl font-bold">
         Categories
       </span>
 
-     <div className="w-full flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-4 lg:gap-6 py-6">
+     <div className="w-full flex flex-wrap justify-center gap-2  md:gap-4 lg:gap-6 py-6">
   {["Men", "Women", "Unisex"].map((label) => (
     <Link
       key={label}
@@ -65,6 +66,37 @@ marqueeText="Fragenzo ✦ For ✦ Him ✦ For ✦ Her ✦ For ✦ You ✦"
     </Link>
   ))}
 </div>
+ <span className="flex justify-center font-bold  text-xl sm:texxl">Collaberation</span>
+<div className="grid grid-cols-4 gap-4 place-items-center py-6">
+  {[
+    "Chanel",
+    "Dior",
+    "Gucci",
+    "Armani",
+    "Versace",
+    "Tom Ford",
+    "Hugo Boss",
+    "Burberry",
+    "Hermès",
+    "Jo Malone",
+    "Bvlgari",
+    "Prada",
+    "Lacoste",
+    "Mont Blanc",
+    "Coach",
+    "more...",
+  ].map((brand) => (
+    <span
+      key={brand}
+      className="w-20 h-20 bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-md  text-sm font-semibold flex items-center justify-center text-center"
+    >
+      {brand}
+    </span>
+  ))}
+</div>
+
+
+
 
     </div>
   );

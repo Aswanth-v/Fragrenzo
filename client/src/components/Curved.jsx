@@ -76,7 +76,7 @@ const CurvedLoop = ({
     dragRef.current = true;
     lastXRef.current = e.clientX;
     velRef.current = 0;
-    (e.target).setPointerCapture(e.pointerId);
+    e.target.setPointerCapture(e.pointerId);
   };
 
   const onPointerMove = (e) => {
@@ -109,7 +109,7 @@ const CurvedLoop = ({
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center w-full "
+      className="min-h-screen flex items-center justify-center w-full"
       style={{ visibility: ready ? "visible" : "hidden", cursor: cursorStyle }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -137,7 +137,10 @@ const CurvedLoop = ({
           />
         </defs>
         {ready && (
-          <text xmlSpace="preserve" className={`fill-white ${className ?? ""}`}>
+          <text
+            xmlSpace="preserve"
+            className={className ? className : "fill-white"}
+          >
             <textPath href={`#${pathId}`} xmlSpace="preserve">
               {Array.from({ length: repeats }).map((_, i) => (
                 <tspan
