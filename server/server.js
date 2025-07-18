@@ -41,7 +41,7 @@ app.use("/api/shop/products", shopProductrouter);
 app.use("/api/shop/cart", shopCartrouter);
 app.use("/api/shop/address", shopAddressrouter);
 app.use("/api/shop/order", shopOrderRouter);
-app.use("/api/admin/order", adminOrderRouter);
+app.use("/api/admin/orders", adminOrderRouter);
 
 // ✅ MongoDB connection
 mongoose

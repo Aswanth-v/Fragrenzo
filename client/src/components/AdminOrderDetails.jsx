@@ -3,7 +3,7 @@ import Form from "./ui/Form";
 import { DialogContent } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
-//import { Badge } from "../ui/badge";
+import { Badge } from "./ui/badge";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersForAdmin,
