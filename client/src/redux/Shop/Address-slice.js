@@ -36,7 +36,7 @@ export const editaAddress = createAsyncThunk(
       `http://localhost:5000/api/shop/address/update/${userId}/${addressId}`,
       formdata
     );
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   }
 );

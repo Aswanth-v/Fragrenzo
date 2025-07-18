@@ -10,7 +10,7 @@ import {
   fetchAllAddresses,
 } from "../redux/Shop/Address-slice";
 import AddressCard from "./AddressCard";
-import { useToast } from "../hooks/use-toast"
+import { useToast } from "../hooks/use-toast";
 
 const initialAddressFormData = {
   address: "",

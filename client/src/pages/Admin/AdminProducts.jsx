@@ -5,7 +5,12 @@ import Form from "../../components/ui/Form";
 import { addFragrensFormElements } from "../../config/RegisterformControlls";
 import Addimage from "../../components/Addimage.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewProduct, editProduct, fetchProduct,deleteProduct } from "../../redux/Admin/Product-slice";
+import {
+  addNewProduct,
+  editProduct,
+  fetchProduct,
+  deleteProduct,
+} from "../../redux/Admin/Product-slice";
 import { useToast } from "../../hooks/use-toast";
 import ProductCard from "../../components/Product-Card";
 
@@ -75,15 +80,13 @@ const AdminProducts = () => {
     dispatch(fetchProduct());
   }, [dispatch]);
 
-
-  const productDelete=(getCurrentProductId)=>{
-    dispatch(deleteProduct(getCurrentProductId)).then((data)=>{
-      if(data?.payload?.success){
-        dispatch(fetchProduct())
+  const productDelete = (getCurrentProductId) => {
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchProduct());
       }
-    })
-    
-  }
+    });
+  };
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -100,7 +103,9 @@ const AdminProducts = () => {
           }}
         >
           <SheetContent side="right" className="overflow-auto">
-            <SheetHeader>{editedId ? "Edit Product" : "Add Product"}</SheetHeader>
+            <SheetHeader>
+              {editedId ? "Edit Product" : "Add Product"}
+            </SheetHeader>
 
             {/* ✅ Only show Addimage when NOT editing */}
             {editedId === null && (
@@ -130,7 +135,8 @@ const AdminProducts = () => {
       </div>
 
       <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {productList && productList.length > 0 &&
+        {productList &&
+          productList.length > 0 &&
           productList.map((productListItem) => (
             <ProductCard
               key={productListItem._id}

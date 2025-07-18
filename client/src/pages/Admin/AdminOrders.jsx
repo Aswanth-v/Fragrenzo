@@ -1,8 +1,10 @@
 import React from 'react'
-
+import AdminOrder from '../../components/AdminOrder'
 const AdminOrders = () => {
   return (
-    <div>AdminOrders</div>
+    <div>
+      <AdminOrder/>
+    </div>
   )
 }
 

@@ -1,4 +1,3 @@
-
 import Address from "../../model/Address.js";
 
 export const addAddress = async (req, res) => {
@@ -133,5 +132,3 @@ export const deleteAddress = async (req, res) => {
     });
   }
 };
-
-

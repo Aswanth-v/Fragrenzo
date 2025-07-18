@@ -5,6 +5,7 @@ import shoppingProductSlice from './redux/Shop/product-slice.js'
 import shoppingCartSlice from './redux/Shop/Cart-slice.js'
 import shopAddressSlice from './redux/Shop/Address-slice.js'
 import shopOrderSlice from './redux/Shop/order-slice.js'
+import adminOrderSlice from './redux/Admin/Order-slice.js'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -12,6 +13,7 @@ export const store = configureStore({
     shopProducts:shoppingProductSlice,
     shopCart:shoppingCartSlice,
     shopAddress:shopAddressSlice,
-    shopOrder:shopOrderSlice
+    shopOrder:shopOrderSlice,
+    adminOrder: adminOrderSlice,
   },
 });
