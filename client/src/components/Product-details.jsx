@@ -123,13 +123,7 @@ function ProductDetails({ open, setOpen, productDetails,cartItems=[],product }) 
               </Button>
             ) : (
               <>  
-                <Button
-                  variant="outline"
-                  className="w-full text-base font-medium bg-white"
-                  onClick={handleBuyNow}
-                >
-                  Buy Now
-                </Button>
+              
               </>
             )}
           </div>

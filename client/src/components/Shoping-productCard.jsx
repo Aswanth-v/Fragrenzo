@@ -93,14 +93,7 @@ const ShopProductCard = ({
           {isLimitReached ? `Max Added (${quantityInCart})` : "Add to Cart"}
         </Button>
 
-        <Button
-          onClick={() => handleBuyNow(product)}
-          disabled={isOutOfStock}
-          variant="secondary"
-          className="w-full text-sm"
-        >
-          Buy Now
-        </Button>
+       
       </CardFooter>
     </Card>
   );
