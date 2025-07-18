@@ -3,11 +3,13 @@ import { authReducer } from "./redux/Authslice.js"; // <-- .js extension require
 import AdminProductSlice from './redux/Admin/Product-slice.js';
 import shoppingProductSlice from './redux/Shop/product-slice.js'
 import shoppingCartSlice from './redux/Shop/Cart-slice.js'
+import shopAddressSlice from './redux/Shop/Address-slice.js'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     adminProducts:AdminProductSlice,
     shopProducts:shoppingProductSlice,
     shopCart:shoppingCartSlice,
+    shopAdress:shopAddressSlice
   },
 });
