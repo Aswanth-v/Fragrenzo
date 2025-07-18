@@ -56,10 +56,10 @@ const Register = () => {
         </p>
       </div>
       <Form
-        formdata={RegisterformControlls}
+        formControls={RegisterformControlls}
         buttonText="Create Account"
-        data={data}
-        setData={setData}
+               formdata={data}
+        setFormdata={setData}
         onSubmit={onSubmit}
       />
     </div>

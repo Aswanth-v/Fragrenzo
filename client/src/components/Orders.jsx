@@ -16,7 +16,8 @@ import {
   getAllOrdersByUserId,
   getOrderDetails,
   resetOrderDetails,
-} from "../../redux/shop/order-slice";
+} from '../redux/Shop/order-slice';
+
 
 
 function ShoppingOrders() {

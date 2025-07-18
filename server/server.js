@@ -8,6 +8,7 @@ import adminProductsRouter from './routes/admin/products-routes.js'
 import shopProductrouter from './routes/shop/products-route.js'
 import shopCartrouter from './routes/shop/cart-route.js';
 import shopAddressrouter from './routes/shop/adress-route.js';
+import  shopOrderRouter from "./routes/shop/order-route.js"
 dotenv.config();
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/shop/products", shopProductrouter);
 app.use("/api/shop/cart", shopCartrouter);
 app.use("/api/shop/address", shopAddressrouter);
+app.use("/api/shop/order", shopOrderRouter);
 
 
 // ✅ MongoDB connection

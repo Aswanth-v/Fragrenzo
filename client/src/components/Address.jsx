@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Form from "./ui/Form";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { addressFormControls } from "../config/RegisterformControlls";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,8 +9,8 @@ import {
   editaAddress,
   fetchAllAddresses,
 } from "../redux/Shop/Address-slice";
-import AddressCard from "./address-card";
-import { useToast } from "../ui/use-toast";
+import AddressCard from "./AddressCard";
+import { useToast } from "../hooks/use-toast"
 
 const initialAddressFormData = {
   address: "",
@@ -21,7 +21,7 @@ const initialAddressFormData = {
 };
 
 function Address({ setCurrentSelectedAddress, selectedId }) {
-  const [formData, setFormData] = useState(initialAddressFormData);
+  const [formdata, setFormdata] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -32,7 +32,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     event.preventDefault();
 
     if (addressList.length >= 3 && currentEditedId === null) {
-      setFormData(initialAddressFormData);
+      setFormdata(initialAddressFormData);
       toast({
         title: "You can add max 3 addresses",
         variant: "destructive",
@@ -46,13 +46,13 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
           editaAddress({
             userId: user?.id,
             addressId: currentEditedId,
-            formData,
+            formdata,
           })
         ).then((data) => {
           if (data?.payload?.success) {
             dispatch(fetchAllAddresses(user?.id));
             setCurrentEditedId(null);
-            setFormData(initialAddressFormData);
+            setFormdata(initialAddressFormData);
             toast({
               title: "Address updated successfully",
             });
@@ -60,13 +60,13 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
         })
       : dispatch(
           addNewAddress({
-            ...formData,
+            ...formdata,
             userId: user?.id,
           })
         ).then((data) => {
           if (data?.payload?.success) {
             dispatch(fetchAllAddresses(user?.id));
-            setFormData(initialAddressFormData);
+            setFormdata(initialAddressFormData);
             toast({
               title: "Address added successfully",
             });
@@ -89,8 +89,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
 
   function handleEditAddress(getCuurentAddress) {
     setCurrentEditedId(getCuurentAddress?._id);
-    setFormData({
-      ...formData,
+    setFormdata({
+      ...formdata,
       address: getCuurentAddress?.address,
       city: getCuurentAddress?.city,
       phone: getCuurentAddress?.phone,
@@ -100,8 +100,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
   }
 
   function isFormValid() {
-    return Object.keys(formData)
-      .map((key) => formData[key].trim() !== "")
+    return Object.keys(formdata)
+      .map((key) => formdata[key].trim() !== "")
       .every((item) => item);
   }
 
@@ -134,8 +134,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
       <CardContent className="space-y-3">
         <Form
           formControls={addressFormControls}
-          formData={formData}
-          setFormData={setFormData}
+          formdata={formdata}
+          setFormdata={setFormdata}
           buttonText={currentEditedId !== null ? "Edit" : "Add"}
           onSubmit={handleManageAddress}
           isBtnDisabled={!isFormValid()}

@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import Banner3 from "../../assets/Banner3.png";
-import Address from "../../components/shopping-view/address";
+import Address from "../../components/Address";
 import ShoppingOrders from "../../components/Orders";
 
 const  AccountPage=()=> {

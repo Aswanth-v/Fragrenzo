@@ -12,30 +12,27 @@ import { Textarea } from "./textarea";
 import { Button } from "./button";
 
 const Form = ({
-  formdata,       // ✅ your original prop name
-  data,           // ✅ your original prop name
-  setData,        // ✅ your original prop name
+  formControls = [],   // ✅ updated to match the prop name passed from Address.jsx
+  formdata,
+  setFormdata,
   onSubmit,
   buttonText,
   isBtnDisabled,
 }) => {
-  function renderInputsByComponentType(getformItem) {
-    const value = data?.[getformItem.name] || "";
+  const renderInputsByComponentType = (item) => {
+    const value = formdata?.[item.name] || "";
 
-    switch (getformItem.componentType) {
+    switch (item.componentType) {
       case "input":
         return (
           <Input
-            name={getformItem.name}
-            placeholder={getformItem.placeholder}
-            id={getformItem.name}
-            type={getformItem.type}
+            name={item.name}
+            placeholder={item.placeholder}
+            id={item.name}
+            type={item.type}
             value={value}
-            onChange={(event) =>
-              setData({
-                ...data,
-                [getformItem.name]: event.target.value,
-              })
+            onChange={(e) =>
+              setFormdata({ ...formdata, [item.name]: e.target.value })
             }
           />
         );
@@ -45,19 +42,14 @@ const Form = ({
           <Select
             value={value}
             onValueChange={(val) =>
-              setData({
-                ...data,
-                [getformItem.name]: val,
-              })
+              setFormdata({ ...formdata, [item.name]: val })
             }
           >
             <SelectTrigger className="w-full">
-              <SelectValue
-                placeholder={getformItem.placeholder}
-              />
+              <SelectValue placeholder={item.placeholder} />
             </SelectTrigger>
             <SelectContent>
-              {getformItem.options?.map((optionItem) => (
+              {item.options?.map((optionItem) => (
                 <SelectItem key={optionItem.id} value={optionItem.id}>
                   {optionItem.label}
                 </SelectItem>
@@ -69,15 +61,12 @@ const Form = ({
       case "textarea":
         return (
           <Textarea
-            name={getformItem.name}
-            placeholder={getformItem.placeholder}
-            id={getformItem.name}
+            name={item.name}
+            placeholder={item.placeholder}
+            id={item.name}
             value={value}
-            onChange={(event) =>
-              setData({
-                ...data,
-                [getformItem.name]: event.target.value,
-              })
+            onChange={(e) =>
+              setFormdata({ ...formdata, [item.name]: e.target.value })
             }
           />
         );
@@ -85,29 +74,26 @@ const Form = ({
       default:
         return (
           <Input
-            name={getformItem.name}
-            placeholder={getformItem.placeholder}
-            id={getformItem.name}
-            type={getformItem.type}
+            name={item.name}
+            placeholder={item.placeholder}
+            id={item.name}
+            type={item.type}
             value={value}
-            onChange={(event) =>
-              setData({
-                ...data,
-                [getformItem.name]: event.target.value,
-              })
+            onChange={(e) =>
+              setFormdata({ ...formdata, [item.name]: e.target.value })
             }
           />
         );
     }
-  }
+  };
 
   return (
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
-        {formdata.map((formItem) => (
-          <div className="grid w-full gap-1.5" key={formItem.name}>
-            <Label className="mb-1">{formItem.label}</Label>
-            {renderInputsByComponentType(formItem)}
+        {formControls.map((item) => (
+          <div className="grid w-full gap-1.5" key={item.name}>
+            <Label className="mb-1">{item.label}</Label>
+            {renderInputsByComponentType(item)}
           </div>
         ))}
       </div>

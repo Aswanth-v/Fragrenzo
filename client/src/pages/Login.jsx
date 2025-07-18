@@ -45,10 +45,10 @@ const Login = () => {
         </p>
       </div>
       <Form
-        formdata={LoginformControlls}
+          formControls={LoginformControlls}
         buttonText="Create Account"
-        data={data}
-        setData={setData}
+        formdata={data}
+        setFormdata={setData}
         onSubmit={onSubmit}
       />
     </div>

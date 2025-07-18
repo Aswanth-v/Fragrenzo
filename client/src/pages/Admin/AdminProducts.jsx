@@ -119,9 +119,9 @@ const AdminProducts = () => {
             <div className="py-6">
               <Form
                 onSubmit={onSubmit}
-                formdata={addFragrensFormElements}
-                data={formData}
-                setData={setFormData}
+                formControls={addFragrensFormElements}
+                formdata={formData}
+                setFormdata={setFormData}
                 buttonText={editedId ? "Edit" : "Add"}
               />
             </div>
