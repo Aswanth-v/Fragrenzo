@@ -1,8 +1,11 @@
-
 import Order from "../../model/Order.js";
 import Cart from "../../model/cart.js";
 import Product from "../../model/product.js";
-import paypal from "../../helpers/paypal.js";  
+import paypal from "../../helpers/paypal.js";
+
+// Static conversion rate (INR to USD)
+const INR_TO_USD = 83;
+
 export const createOrder = async (req, res) => {
   try {
     const {
@@ -20,6 +23,19 @@ export const createOrder = async (req, res) => {
       cartId,
     } = req.body;
 
+    // Convert item prices to USD
+    const paypalItems = cartItems.map((item) => ({
+      name: item.title,
+      sku: item.productId,
+      price: (item.price / INR_TO_USD).toFixed(2),
+      currency: "USD",
+      quantity: item.quantity,
+    }));
+
+    const totalUSD = paypalItems.reduce((sum, item) => {
+      return sum + parseFloat(item.price) * item.quantity;
+    }, 0).toFixed(2);
+
     const create_payment_json = {
       intent: "sale",
       payer: {
@@ -31,20 +47,12 @@ export const createOrder = async (req, res) => {
       },
       transactions: [
         {
-          item_list: {
-            items: cartItems.map((item) => ({
-              name: item.title,
-              sku: item.productId,
-              price: item.price.toFixed(2),
-              currency: "USD",
-              quantity: item.quantity,
-            })),
-          },
+          item_list: { items: paypalItems },
           amount: {
             currency: "USD",
-            total: totalAmount.toFixed(2),
+            total: totalUSD,
           },
-          description: "description",
+          description: "Order paid via PayPal (INR converted to USD)",
         },
       ],
     };
@@ -52,10 +60,9 @@ export const createOrder = async (req, res) => {
     paypal.payment.create(create_payment_json, async (error, paymentInfo) => {
       if (error) {
         console.log(error);
-
         return res.status(500).json({
           success: false,
-          message: "Error while creating paypal payment",
+          message: "Error while creating PayPal payment",
         });
       } else {
         const newlyCreatedOrder = new Order({
@@ -90,7 +97,7 @@ export const createOrder = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occurred!",
     });
   }
 };
@@ -104,7 +111,7 @@ export const capturePayment = async (req, res) => {
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: "Order can not be found",
+        message: "Order cannot be found",
       });
     }
 
@@ -119,18 +126,15 @@ export const capturePayment = async (req, res) => {
       if (!product) {
         return res.status(404).json({
           success: false,
-          message: `Not enough stock for this product ${product.title}`,
+          message: `Product not found`,
         });
       }
 
       product.totalStock -= item.quantity;
-
       await product.save();
     }
 
-    const getCartId = order.cartId;
-    await Cart.findByIdAndDelete(getCartId);
-
+    await Cart.findByIdAndDelete(order.cartId);
     await order.save();
 
     res.status(200).json({
@@ -142,7 +146,7 @@ export const capturePayment = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occurred!",
     });
   }
 };
@@ -168,7 +172,7 @@ export const getAllOrdersByUser = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occurred!",
     });
   }
 };
@@ -194,8 +198,7 @@ export const getOrderDetails = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Some error occurred!",
     });
   }
 };
-

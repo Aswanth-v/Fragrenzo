@@ -1,33 +1,39 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import Authcheck from "./components/Authcheck.jsx";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authCheck } from "./redux/Authslice.js";
+
 // Layouts
 import AuthLayout from "./components/ui/AuthLayout.jsx";
 import AdminLayout from "./components/ui/AdminLayout.jsx";
 import ShoppingLayout from "./components/ShoppingLayout.jsx";
+
 // Auth Pages
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+
 // Admin Pages
 import AdminDashbord from "./pages/Admin/AdminDashbord.jsx";
 import AdminFeatures from "./pages/Admin/AdminFeatures.jsx";
 import AdminOrders from "./pages/Admin/AdminOrders.jsx";
 import AdminProducts from "./pages/Admin/AdminProducts.jsx";
+
 // Shopping Pages
+import Home from "./pages/shopping/Home.jsx";
 import AccountPage from "./pages/shopping/AccountPage.jsx";
 import Listing from "./pages/shopping/Listing.jsx";
 import ChekoutPage from "./pages/shopping/ChekoutPage.jsx";
-import Home from "./pages/shopping/Home.jsx";
+import PaypalReturnPage from "./pages/shopping/PaypalReturn.jsx";
+import PaymentSuccessPage from "./pages/shopping/PaymentSucess.jsx";
 
-import { useDispatch, useSelector } from "react-redux";
-import { authCheck } from "./redux/Authslice.js";
-import { Navigate } from "react-router-dom";
+// Auth Guard
+import Authcheck from "./components/Authcheck.jsx";
 
-
+// Styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// ✅ Component for handling `/` root path
+// ✅ Navigate based on role
 const NavigateBasedOnRole = () => {
   const { user } = useSelector((state) => state.auth);
   if (user?.role === "admin") return <Navigate to="/admin/dashbord" replace />;
@@ -47,9 +53,9 @@ const App = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-coloverflow-y-scroll scrollbar-hide">
+    <div className="flex flex-col overflow-y-scroll scrollbar-hide">
       <Routes>
-        {/* ✅ Root path handling */}
+        {/* ✅ Root path */}
         <Route
           path="/"
           element={
@@ -116,6 +122,8 @@ const App = () => {
           <Route path="account" element={<AccountPage />} />
           <Route path="list" element={<Listing />} />
           <Route path="checkout" element={<ChekoutPage />} />
+          <Route path="paypal-return" element={<PaypalReturnPage />} />
+          <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route>
       </Routes>
     </div>

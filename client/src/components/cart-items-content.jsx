@@ -46,7 +46,7 @@ function UserCartItemsContent({ cartItem }) {
       {/* Price & Delete */}
       <div className="text-right space-y-2">
         <p className="font-bold text-primary text-md">
-          $
+          ₹
           {(
             (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
             cartItem?.quantity
