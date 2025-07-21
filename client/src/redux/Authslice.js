@@ -12,7 +12,7 @@ export const userRegisterAction = createAsyncThunk(
 
   async (data) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      `${import.meta.env.VITE_API_URL}/api/auth/register`,
       data,
       {
         withCredentials: true,
@@ -27,7 +27,7 @@ export const userLoginAction = createAsyncThunk(
 
   async (data) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
       data,
       {
         withCredentials: true,
@@ -42,7 +42,7 @@ export const authCheck = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "http://localhost:5000/api/auth/auth-check",
+      `${import.meta.env.VITE_API_URL}/api/auth/auth-check`,
 
       {
         withCredentials: true,
@@ -61,7 +61,7 @@ export const logoutUser = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/logout-user",
+      `${import.meta.env.VITE_API_URL}/api/auth/logout-user`,
       {},
       {
         withCredentials: true,
