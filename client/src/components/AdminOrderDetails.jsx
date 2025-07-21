@@ -26,27 +26,30 @@ function AdminOrderDetails({ orderDetails, onStatusUpdated }) {
     event.preventDefault();
     const { status } = formData;
 
-    dispatch(updateOrderStatus({ id: orderDetails?._id, orderStatus: status }))
-      .then((data) => {
-        if (data?.payload?.success) {
-          dispatch(getOrderDetailsForAdmin(orderDetails?._id));
-          dispatch(getAllOrdersForAdmin());
+    dispatch(
+      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+        dispatch(getAllOrdersForAdmin());
 
-          if (onStatusUpdated) {
-            onStatusUpdated();
-          }
-
-          setFormData(initialFormData);
-          toast({ title: data?.payload?.message });
+        if (onStatusUpdated) {
+          onStatusUpdated();
         }
-      });
+
+        setFormData(initialFormData);
+        toast({ title: data?.payload?.message });
+      }
+    });
   }
 
   return (
     <DialogContent className="sm:max-w-[700px] h-[90vh] overflow-hidden rounded-2xl shadow-lg bg-background">
       <div className="h-full overflow-y-auto p-6 space-y-6">
         <div className="space-y-3">
-          <div className="text-xl font-semibold text-gray-800">Order Summary</div>
+          <div className="text-xl font-semibold text-gray-800">
+            Order Summary
+          </div>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">

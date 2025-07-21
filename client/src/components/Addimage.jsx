@@ -15,11 +15,10 @@ const Addimage = ({
   setUploadedImageUrl,
   setImageLoadingState,
   imageLoadingState,
-  isediting
+  isediting,
 }) => {
   const inputRef = useRef(null);
-  console.log(isediting,'isediting');
-  
+  console.log(isediting, "isediting");
 
   const imageFileChange = (event) => {
     const selectedFile = event.target.files?.[0];

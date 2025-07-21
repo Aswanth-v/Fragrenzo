@@ -56,17 +56,27 @@ function AdminOrdersView() {
     <>
       <Card className="shadow-lg rounded-2xl p-4">
         <CardHeader className="pb-2">
-          <CardTitle className="text-2xl font-bold text-gray-800">All Orders</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-800">
+            All Orders
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <Table className="min-w-full border rounded-md">
               <TableHeader>
                 <TableRow className="bg-gray-100 text-gray-700">
-                  <TableHead className="text-sm font-semibold">Order ID</TableHead>
-                  <TableHead className="text-sm font-semibold">Order Date</TableHead>
-                  <TableHead className="text-sm font-semibold">Order Status</TableHead>
-                  <TableHead className="text-sm font-semibold">Total Price</TableHead>
+                  <TableHead className="text-sm font-semibold">
+                    Order ID
+                  </TableHead>
+                  <TableHead className="text-sm font-semibold">
+                    Order Date
+                  </TableHead>
+                  <TableHead className="text-sm font-semibold">
+                    Order Status
+                  </TableHead>
+                  <TableHead className="text-sm font-semibold">
+                    Total Price
+                  </TableHead>
                   <TableHead>
                     <span className="sr-only">Details</span>
                   </TableHead>
@@ -111,7 +121,10 @@ function AdminOrdersView() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center text-gray-500 py-4">
+                    <TableCell
+                      colSpan={5}
+                      className="text-center text-gray-500 py-4"
+                    >
                       No orders found.
                     </TableCell>
                   </TableRow>
