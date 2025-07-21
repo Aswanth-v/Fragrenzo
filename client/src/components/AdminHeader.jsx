@@ -2,11 +2,16 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Eye, LogOut } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../redux/Authslice";
+import { logoutUser,resetTokenAndCredentials } from "../redux/Authslice";
+import { useNavigate } from "react-router-dom";
 const AdminHeader = ({ setOpen }) => {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const handleLogout = () => {
-    dispatch(logoutUser());
+    //dispatch(logoutUser());
+    dispatch(resetTokenAndCredentials())
+       sessionStorage.clear()
+       navigate('/auth/login')
   };
 
   return (

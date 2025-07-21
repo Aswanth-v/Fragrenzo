@@ -21,7 +21,7 @@ import {
 } from "./ui/dropdown-menu";
 
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { logoutUser } from "../redux/Authslice";
+import { logoutUser, resetTokenAndCredentials } from "../redux/Authslice";
 import Cartwrapp from "./Cart-wrapp";
 import { fetchCartItems } from "../redux/Shop/Cart-slice";
 
@@ -44,7 +44,10 @@ const HeaderRight = ({ user }) => {
      const {cartItems}=useSelector(state=>state.shopCart)
    const[openCartSheet,setOpenCartSheet]=useState(false)
   const handleLogout = () => {
-    dispatch(logoutUser());
+   // dispatch(logoutUser());
+   dispatch(resetTokenAndCredentials())
+   sessionStorage.clear()
+   navigate('/auth/login')
   };
 useEffect(()=>{
 dispatch(fetchCartItems(user?.id))

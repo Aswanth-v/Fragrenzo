@@ -48,7 +48,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(authCheck());
+    const token = JSON.parse(sessionStorage.getItem('token'))
+    dispatch(authCheck(token));
   }, [dispatch]);
 
   if (isLoading) return <div>Loading...</div>;
