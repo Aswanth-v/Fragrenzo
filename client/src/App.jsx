@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authCheck } from "./redux/Authslice.js";
 
@@ -28,6 +28,7 @@ import PaymentSuccessPage from "./pages/shopping/PaymentSucess.jsx";
 
 // Auth Guard
 import Authcheck from "./components/Authcheck.jsx";
+import SplashOrHome from "./components/splash-home.jsx"; // <-- Import here
 
 // Styles
 import "slick-carousel/slick/slick.css";
@@ -55,19 +56,8 @@ const App = () => {
   return (
     <div className="flex flex-col overflow-y-scroll scrollbar-hide">
       <Routes>
-        {/* ✅ Root path */}
-        <Route
-          path="/"
-          element={
-            <Authcheck
-              isAuthenticated={isAuthenticated}
-              user={user}
-              isLoading={isLoading}
-            >
-              <NavigateBasedOnRole />
-            </Authcheck>
-          }
-        />
+        {/* ✅ Root path shows Home for 30s, then redirects to login */}
+        <Route path="/" element={<SplashOrHome />} />
 
         {/* ✅ Auth routes */}
         <Route
