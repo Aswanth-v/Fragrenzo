@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../index.css";
 import { Link } from "react-router-dom";
-import Form from "../components/ui/Form";
+import Form from '../components/ui/Form';
 import { LoginformControlls } from "../config/RegisterformControlls";
 import { useDispatch } from "react-redux";
 import { userLoginAction } from "../redux/Authslice";
