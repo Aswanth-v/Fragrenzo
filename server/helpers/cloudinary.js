@@ -1,12 +1,15 @@
 import multer from "multer";
 import cloudinaryModule from "cloudinary";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const cloudinary = cloudinaryModule.v2;
 
 cloudinary.config({
-  cloud_name: "ds79netzy",
-  api_key:"885731781185259",
-  api_secret:"24DIqSQWkP4CNboDXC97JZZqbeY"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export const upload = multer({ storage: multer.memoryStorage() });
