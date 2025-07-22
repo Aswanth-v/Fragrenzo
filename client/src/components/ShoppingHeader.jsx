@@ -55,7 +55,7 @@ dispatch(fetchCartItems(user?.id))
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Sheet open={openCartSheet} onOpenChange={()=>setOpenCartSheet(false)}>
-  <Button variant="outline" size="icon" className="hidden lg:inline-flex" onClick={()=>setOpenCartSheet(true)}>
+  <Button variant="outline" size="icon" className="inline-flex" onClick={()=>setOpenCartSheet(true)}>
         <ShoppingCart className="w-6 h-6" />
         <span className="sr-only">User Cart</span>
       </Button>
