@@ -101,5 +101,4 @@ npm run dev
 
 Aswanth V
 
-GitHub: https://github.com/Aswanth-v
 LinkedIn: https://linkedin.com/in/aswanth-v
